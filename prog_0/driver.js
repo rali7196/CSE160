@@ -1,36 +1,54 @@
-// Your JavaScript code for canvas interaction goes here
+//initialize elements that are referenced
 const canvas = document.getElementById('myCanvas');
-const ctx = canvas.getContext('2d');
+const context = canvas.getContext('2d');
 
-canvas.addEventListener('click', drawPoint)
-ctx.beginPath();
+//add event listeners
+canvas.addEventListener('mousedown', drawPoint)
+context.beginPath();
 point_counter = 1
+right_clicked = false
 
-function drawPoint(){
+//drawing the x and y axis
+let rectInit = canvas.getBoundingClientRect();
+context.moveTo(500,0)
+context.lineTo(500,350)
+context.strokeStyle = "green";
+context.stroke()
+context.beginPath();
+
+context.moveTo(0, 350/2)
+context.lineTo(1000, 350/2)
+context.strokeStyle = "red"
+context.stroke()
+context.beginPath();
+context.strokeStyle = "black"
+// context.strokeStyle = "black"
+
+
+function drawPoint(e){
+    //if user has right clicked, stop drawing
+    if(right_clicked == true){
+        return
+    }
+    //calculate offset of cursor on Canvas
     let rect = canvas.getBoundingClientRect();
-    let x = event.clientX - rect.left;
-    let y = event.clientY - rect.top;
-    console.log("Coordinate x: " + x)
-    console.log("Coordinate y: " + y);
-    console.log("point_counter: " + point_counter)
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+    //edge case for starting a drawing
     if(point_counter == 1){
-        console.log("first success")
-        ctx.moveTo(x, y);
+        context.moveTo(x, y);
         point_counter = point_counter + 1
     }
+    //continuously draw lines until user presses RMB
     else if(point_counter % 2 == 0){
-        console.log("second success")
-        ctx.lineTo(x, y);
-        ctx.stroke();
-        ctx.moveTo(x,y)
+        context.lineTo(x, y);
+        context.stroke();
+        context.moveTo(x,y)
+        if(e.buttons == 2){
+            right_clicked = true
+        }
     }
-
-
-    // console.log("Success")
-
 
 }
 
 
-
-// Add your canvas drawing or interaction code here

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolyLine</title>
+</head>
+<body>
+
+    <h1>Programming Assignment 0 Features</h1>
+    <p>Name: Rehan Ali</p>
+    <p>ID: 1844927</p>
+    <p>Date: January 10th, 2024</p>
+    <a href = /driver.html>Driver Code</a>
+    <h2>Overview of Features</h2>
+    <p>
+        This assignment involves creating a canvas in which 
+        the user can create a poly-line by left clicking
+        on a HTML5 Canvas. My implementation is quite simple,
+        it first starts out by initializing an event
+        listener for when the user pushes their mouse down.
+        Then, it draws the first red and green lines that
+        are seen in the design specification. The drawing
+        itself is handled by the drawPoint function, which 
+        takes one argument: e, which is an event listener.
+        If the user has not created any points yet, it
+        initializes the first line using the moveTo() function. 
+        Then, for every point after that, it creates a line, and
+        starts the next line at the ending point of the previous line.
+    </p>
+    <p>
+        One of the more complex parts of this assignment was
+        calculating the offset. This is because the mousedown
+        event listener can only return the position mouse relative
+        to the entire screen. However, the canvas does not take up
+        the entire screen. To account for this, I found the difference
+        between the cursor's position and the starting points of the
+        canvas. This returns the position of the cursor relative to the 
+        canvas as opposed to the screen. 
+    </p>
+
+
+
+</body>
+</html>
