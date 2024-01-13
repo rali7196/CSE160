@@ -38,10 +38,13 @@ function drawPoint(e){
     if(point_counter == 1){
         context.moveTo(x, y);
         point_counter = point_counter + 1
+        console.log("point placed at ("+x+","+y+")")
     }
     //continuously draw lines until user presses RMB
     else if(point_counter % 2 == 0){
         context.lineTo(x, y);
+        console.log("point placed at ("+x+","+y+")")
+
         context.stroke();
         context.moveTo(x,y)
         if(e.buttons == 2){
