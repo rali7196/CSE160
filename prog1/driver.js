@@ -1,3 +1,17 @@
+var VSHADER_SOURCE =
+  'attribute vec4 a_Position;\n' +
+  'void main() {\n' +
+  '  gl_Position = a_Position;\n' +
+  '  gl_PointSize = 10.0;\n' +
+  '}\n';
+
+// Fragment shader program
+var FSHADER_SOURCE =
+  'void main() {\n' +
+  '  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' +
+  '}\n';
+
+
 //initialize elements that are referenced
 const canvas = document.getElementById('myCanvas');
 const context = canvas.getContext('2d');
@@ -73,8 +87,9 @@ function drawPoint(e){
     let rect = canvas.getBoundingClientRect();
     let x = e.clientX - rect.left;
     let y = e.clientY - rect.top;
-    let normX = x / rect.right
-    let normZ = ((-e.clientY + rect.bottom))/ rect.bottom
+    let normX = ((x-(rect.right/2)) / rect.right)*2
+    let normZ = -((y-(500/2)) / 500)*2
+
 
     //edge case for starting a drawing
     if(point_counter == 1){
@@ -130,8 +145,8 @@ function generateSORPoints(){
         curr = rotated_points[i]
         r = rotated_points[i][0]
         z = rotated_points[i][2]
-        theta = 360 / n
-        for(let j = 2; j <= n; j++){
+        theta = (360 / n) * (Math.PI / 180)
+        for(let j = 1; j < n; j++){
             let newX = r * Math.cos(theta * j)
             let newY = r * Math.sin(theta * j)
             curr.push(newX)
@@ -140,11 +155,52 @@ function generateSORPoints(){
         }
     }
 }
+
+function initVertexBuffers(gl) {
+    var vertices = new Float32Array([
+      0, 0.5,   -0.5, -0.5,   0.5, -0.5, 0.5, 0.5
+    ]);
+    var n = 4
+    // Create a buffer object
+    var vertexBuffer = gl.createBuffer();
+    if (!vertexBuffer) {
+      console.log('Failed to create the buffer object');
+      return -1;
+    }
+  
+  // Bind the buffer object to target
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+  // Write date into the buffer object
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+  
+    var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
+    if (a_Position < 0) {
+      console.log('Failed to get the storage location of a_Position');
+      return -1;
+    }
+    // Assign the buffer object to a_Position variable
+    gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
+  
+    // Enable the assignment to a_Position variable
+    gl.enableVertexAttribArray(a_Position);
+  
+    return n;
+  }
 function generateSOR(){
     generateSORPoints()
-    
+    var canvas = document.getElementById('3dCanvas');
 
-    console.log(rotated_points)   
+    // // Get the rendering context for WebGL
+    // var gl = getWebGLContext(canvas);
+    // if (!gl) {
+    //   console.log('Failed to get the rendering context for WebGL');
+    //   return;
+    // }
+    // initVertexBuffers(gl)
+
+
+
+    console.log(rotated_points[0])   
 }
 
 
