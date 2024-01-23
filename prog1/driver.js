@@ -226,12 +226,18 @@ function findMaxZ(){
 
 function findMinZ(){
   minZ = vertices[2]
-  for(let i = 1; i < vertices.length; i++){
-    if(minZ > vertices[i] && (i+1) % 3 == 0){
+  for(let i = 2; i < vertices.length; i++){
+    if(minZ < vertices[i] && (i+1) % 3 == 0){
       minZ = vertices[i]
     }
   }
-  return minZ
+  res = 0
+  for(let i = 0; i < vertices.length; i++){
+    if(vertices[i] == minZ){
+      res = i
+    }
+  }
+  return [Math.floor(res / 3), minZ]
 }
 
 function generateCircleConnections(){
@@ -284,9 +290,7 @@ function generateSOR(){
     gl.drawArrays(primitiveType, offset, count);
   }
   //drawing the end caps
-  boolEndCaps = document.getElementById('drawEndCaps').checked
 
-  console.log('rotated points: ' + rotated_points)
 
   //connect all of the circles
   rotated_points_connections = []
@@ -337,6 +341,10 @@ function generateSOR(){
     var count = (rotated_points_connections[i].length)/3
     gl.drawArrays(primitiveType, offset, count);
   }
+  //drawing the end caps
+  boolEndCaps = document.getElementById('drawEndCaps').checked
+
+  console.log('rotated points: ' + rotated_points)
 
   if(boolEndCaps == 1){
     let topEndCapZ = findMaxZ()
@@ -391,6 +399,38 @@ function generateSOR(){
   }
 
   //generating the files
+
+  //generating the .coor file
+  point_list = []
+  point_iterator = rotated_points
+  let coor_counter = 0
+  
+  if(boolEndCaps){
+    highest_point = (findMaxZ())[1]
+    point_list.push(0,0,highest_point)
+  }
+  for(let i = 0; i < rotated_points.length; i++){
+    for(let j = 0; j < rotated_points[i].length; j++){
+      point_list.push(rotated_points[i][j])
+    }
+  }
+
+  //coor file generation
+  coor_file = ""
+  coor_file += '' + point_list.length/3 + '\n'
+  for(let i = 0; i < point_list.length; i++){
+    if(i%3==0){
+      coor_file += "" + i/3 + ','
+    }
+    coor_file += "" + point_list[i] + ','
+    if((i+1)%3 == 0){
+      // coor_file += ','
+      placeholder = coor_file.slice(0,-1)
+      coor_file = placeholder
+      coor_file += '\n'
+    } 
+  }
+  console.log(coor_file)
 
 
 
