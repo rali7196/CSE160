@@ -7,19 +7,35 @@
 </head>
 <body>
 
-    <h1>Programming Assignment 0 Demo</h1>
+    <h1>Programming Assignment 1 Demo</h1>
     <a href = "features.html">Go Back to Features</a><p></p>
     <input type="number" id="n" min = 1 ></input>
 
     <!-- <canvas id="myCanvas" width="400" height="200"></canvas> -->
     <button onclick="getN()">Save Value of N</button>
     <p></p>
-    <input type="number" id = "drawEndCaps" min = 0 max = 1 value = 0></input>
-    <button onclick="getDrawEndCaps()">Save option to draw end caps(0 for false, 1 for true)</button>
-    <p>Please note: Lines are assumed to be more horizontal than vertical</p>
+    <input type="checkbox" id = "drawEndCaps" min = 0 max = 1 value = 0>Check if you want endcaps</input>
+    <!-- <button onclick="getDrawEndCaps()">Save option to draw end caps(0 for false, 1 for true)</button> -->
+    <p>Check if you want end caps or not</p>
     <button onclick="generateSOR()">Generate SOR</button>
+
+    <P></P>
+    <script id="vertex-shader-2d" type="notjs">
+        attribute vec4 a_position;
+        void main() {
+          gl_Position = a_position;
+        }
+      </script>
+      <script id="fragment-shader-2d" type="notjs">
+        precision mediump float;
+        void main() {
+          gl_FragColor = vec4(1, 0, 0.5, 1); // return reddish-purple
+        }
+       
+      </script>
     
     <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+
     <canvas id="3dCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
 
     <script src="driver.js"></script>
