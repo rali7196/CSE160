@@ -1,4 +1,6 @@
 // const fs = require('fs')
+var vertices = []
+
 function main(){
 
   const canvas = document.getElementById('myCanvas');
@@ -11,150 +13,8 @@ function main(){
 }
 
 
-
-
-//TODO: 
-    //Generate the points needed to generate shape using rcos(360/n) for x and rsin(360/n) for y
-    //Scale points down using similar triangles equation 
-    //Figure out how to render shapes in 2d using webgl
-    //Figure out how to get triangles from shapes given coordinates
-    //
-
-var vertices = []
-function drawPoint(e, canvas, context){
-    //if user has right clicked, stop drawing
-    if(right_clicked == true){
-        return
-    }
-    //calculate offset of cursor on Canvas
-    let rect = canvas.getBoundingClientRect();
-    let x = e.clientX - rect.left;
-    let y = e.clientY - rect.top;
-    let normX = ((x-(rect.right/2)) / rect.right)*2
-    let normZ = -((y-(500/2)) / 500)*2
-
-
-    //edge case for starting a drawing
-    if(point_counter == 1){
-        context.moveTo(x, y);
-        point_counter = point_counter + 1
-        // console.log("point placed at ("+x+","+y+")")
-        vertices.push(normX)
-        vertices.push(0)
-        vertices.push(normZ)
-        // console.log("normZ "+normZ)
-        // console.log("normX "+normX)
-        vertices_length = vertices_length + 3
-
-    }
-    //continuously draw lines until user presses RMB
-    else if(point_counter % 2 == 0){
-        context.lineTo(x, y);
-        // console.log("point placed at ("+x+","+y+")")
-        context.stroke();
-        context.moveTo(x,y)
-        vertices.push(normX)
-        vertices.push(0)
-        vertices.push(normZ)
-        vertices_length = vertices_length + 3
-
-        if(e.buttons == 2){
-            right_clicked = true
-        }  
-    }
-}
-
-var rotated_points = []
-
-function generateSORPoints(){
-    //generate points
-    for(let i = 0; i < (vertices.length/3); i++){
-        rotated_points.push([])
-    }
-    let counter = 0
-    for(let i =0; i < vertices.length; i++){
-        curr_list = Math.floor(counter / 3)
-        rotated_points[curr_list].push(vertices[i])
-        counter += 1
-
-    }
-    var n = document.getElementById("n").value
-    //x = rcos(theta) where theta = 360/n and r = x
-    //y = rsin(theta) where r = x  
-    for(let i = 0; i < rotated_points.length; i++){
-        curr = rotated_points[i]
-        r = rotated_points[i][0]
-        z = rotated_points[i][2]
-        theta = (360 / n) * (Math.PI / 180)
-        for(let j = 1; j < n; j++){
-            let newX = r * Math.cos(theta * j)
-            let newY = r * Math.sin(theta * j)
-            curr.push(newX)
-            curr.push(newY)
-            curr.push(z)
-        }
-    }
-    // for(let i = 0; i < rotated_points.length; i++){
-    //   currList = rotated_points[i]
-    //   currList.push(currList[0])
-    //   currList.push(currList[1])
-    //   currList.push(currList[2])
-
-    // }
-}
-
-function findMaxZ(){
-  maxZ = vertices[2]
-  for(let i = 2; i < vertices.length; i++){
-    if(maxZ < vertices[i] && (i+1) % 3 == 0){
-      maxZ = vertices[i]
-    }
-  }
-  res = 0
-  for(let i = 0; i < vertices.length; i++){
-    if(vertices[i] == maxZ){
-      res = i
-    }
-  }
-  return [Math.floor(res / 3), maxZ]
-}
-
-function findMinZ(){
-  minZ = vertices[2]
-  for(let i = 2; i < vertices.length; i++){
-    if(minZ < vertices[i] && (i+1) % 3 == 0){
-      minZ = vertices[i]
-    }
-  }
-  res = 0
-  for(let i = 0; i < vertices.length; i++){
-    if(vertices[i] == minZ){
-      res = i
-    }
-  }
-  return [Math.floor(res / 3), minZ]
-}
-
-function generateCircleConnections(){
-  new_vertices = []
-
-}
-
-function downloadCoor(stringData, fileName){
-  const blob = new Blob([stringData], { type: 'text/plain' });
-
-  const downloadLink = document.createElement('a');
-  downloadLink.href = URL.createObjectURL(blob);
-  downloadLink.download = fileName; // Specify the filename for the download
-  document.body.appendChild(downloadLink);
-
-  downloadLink.click();
-
-
-}
-
 function generateSOR(){
-  generateSORPoints()
+  let rotated_points = generateSORPoints()
   var canvas = document.getElementById('3dCanvas');
   var gl= canvas.getContext('webgl');
   var vertexShaderSource = document.querySelector("#vertex-shader-2d").text;
@@ -168,35 +28,18 @@ function generateSOR(){
   var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
   gl.clearColor(0, 0, 0, 0);
   gl.clear(gl.COLOR_BUFFER_BIT);
+  //draws the connection between each "circle" in the SOR
   for(let i = 0; i < rotated_points.length; i++){
-    var positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    var positions = rotated_points[i]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
-    gl.useProgram(program);
-    gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    var size = 3;         
-    var type = gl.FLOAT;   
-    var normalize = false; 
-    var stride = 0;        
-    var offset = 0;        
-    gl.vertexAttribPointer(
-        positionAttributeLocation, size, type, normalize, stride, offset);
-    
-        // draw
-
-    var primitiveType = gl.LINE_LOOP;
-    var offset = 0;
-    var count = (rotated_points[i].length)/3
-    // console.log('curr points: ' + rotated_points[i])
-    gl.drawArrays(primitiveType, offset, count);
+    webGLDraw(gl, rotated_points[i], program, 
+      positionAttributeLocation, gl.LINE_LOOP, 
+      (rotated_points[i].length)/3)
   }
   //drawing the end caps
 
 
-  //connect all of the circles
+  //connect all of the circles by, starting from the top 
+  //circle, then go down to each point at the same position
+  //in each circle and connect them. 
   rotated_points_connections = []
   next_line_counter = 0
   // console.log('length: ' + rotated_points.length)
@@ -215,31 +58,17 @@ function generateSOR(){
   // console.log('rotated points: ' + rotated_points)
   // console.log('rotated points connectoins: ' + rotated_points_connections)
   for(let i = 0; i < rotated_points_connections.length; i++){
-    var positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    var positions = rotated_points_connections[i]
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-    gl.useProgram(program);
-    gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    var size = 3;          
-    var type = gl.FLOAT;   
-    var normalize = false; 
-    var stride = 0;        
-    var offset = 0;        
-    gl.vertexAttribPointer(
-        positionAttributeLocation, size, type, normalize, stride, offset);
-    // draw
-    var primitiveType = gl.LINE_STRIP;
-    var offset = 0;
-    // var count = document.getElementById("n").value; //this will be the value of n
-    var count = (rotated_points_connections[i].length)/3
-    gl.drawArrays(primitiveType, offset, count);
+    webGLDraw(gl, rotated_points_connections[i], 
+      program, positionAttributeLocation, gl.LINE_STRIP,
+      (rotated_points_connections[i].length)/3)
+
   }
   //drawing the end caps
   boolEndCaps = document.getElementById('drawEndCaps').checked
 
-
+  //draws lines between the center point and every point
+  //in the top circle
+  //same process is repeated for bottom endcap
   if(boolEndCaps == 1){
     let topEndCapZ = findMaxZ()
     topList = rotated_points[topEndCapZ[0]]
@@ -253,27 +82,11 @@ function generateSOR(){
         endCapList.push(topEndCapZ[1])
       }
     }
-    var positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    var positions = endCapList
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
-    gl.useProgram(program);
-    gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    var size = 3;          
-    var type = gl.FLOAT;   
-    var normalize = false; 
-    var stride = 0;        
-    var offset = 0;        
-    gl.vertexAttribPointer(
-        positionAttributeLocation, size, type, normalize, stride, offset);
-    // // draw
-    var primitiveType = gl.LINES;
-    var offset = 0;
-    var count = document.getElementById("n").value; //this will be the value of n
-    var count = (endCapList.length)/3
-    gl.drawArrays(primitiveType, offset, count);
+    webGLDraw(gl, endCapList, program, 
+      positionAttributeLocation, gl.LINES, 
+      (endCapList.length)/3)
+
 
     let botEndCapZ = findMinZ()
     botList = rotated_points[botEndCapZ[0]]
@@ -287,28 +100,10 @@ function generateSOR(){
         endCapListTwo.push(botEndCapZ[1])
       }
     }
-    var positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    var positions = endCapListTwo
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
-    gl.useProgram(program);
-    gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    var size = 3;          
-    var type = gl.FLOAT;   
-    var normalize = false; 
-    var stride = 0;        
-    var offset = 0;        
-    gl.vertexAttribPointer(
-        positionAttributeLocation, size, type, normalize, stride, offset);
-    // // draw
-    var primitiveType = gl.LINES;
-    var offset = 0;
-    var count = document.getElementById("n").value; //this will be the value of n
-    var count = (endCapListTwo.length)/3
-    gl.drawArrays(primitiveType, offset, count);
-
+    webGLDraw(gl, endCapListTwo, program,
+      positionAttributeLocation, gl.LINES,
+      (endCapListTwo.length)/3)
   }
 
   //generating the files
@@ -346,6 +141,8 @@ function generateSOR(){
     } 
   }
   // console.log(coor_file)
+
+  //generating the poly file
 
   poly_points_list = []
 
@@ -397,6 +194,7 @@ function generateSOR(){
     //add p1,p4,p3
   }
 
+  //defining the triangles for the endcaps
   endCapLevelTop = findMaxZ()[0]
   triCounter += 1
   endCapP1 = 0
