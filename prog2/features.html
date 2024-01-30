@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolyLine</title>
+</head>
+<body>
+
+    <h1>Programming Assignment 0 Features</h1>
+    <p>Name: Rehan Ali</p>
+    <p>ID: rali3</p>
+    <p>Date: January 22nd, 2024</p>
+    <a href = "driver.html">Driver Code</a>
+    <h2>Overview of Features</h2>
+    <p>
+        This assignemnt involved taking the output from the previous assignment and 
+        revolving it around the z axis in the three dimensional plane. In order to do this,
+        I took all the points from the user's 2d drawing, and then used trigonometry
+        to calculate where each point would be if I rotated it by theta degrees. Then,
+        using WebGL, I was able to successfully render the object. I did this by strategically
+        splitting the points into arrays that WebGL could parse via its drawarrays() function. 
+        What this function does is it takes an array of vertices, and a drawing mode,
+        and then it simply draws the vertices. This function proved to be very useful in rendering
+        my shape. 
+    </p>
+    <p>
+        One of the more complex parts of this assignment was learning how to use WebGL.
+        In particular, I found writing all of the setup code for WebGL to be especially difficult
+        due to how unfamiliar I was with it. Despite this, I learned a lot about how webGL works, and how 
+        all of the boilerplate code is used to setup the drawarrays() function. Additionally,
+        I found the concept of vertex shaders and fragment shaders to be particularly interesting. 
+    </p>
+    <h2>Output Image</h2>
+    <img src="prog_1_output.png">
+
+
+
+</body>
+</html>
