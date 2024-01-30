@@ -75,37 +75,6 @@ function drawLines(){
     // outputContext.strokeStyle = "black"
 }
 drawLines()
-// function initVertexBuffers(gl) {
-//   var vertices = new Float32Array([
-//     0.0, 0.5,   -0.5, -0.5,   0.5, -0.5
-//   ]);
-//   var n = 3; // The number of vertices
-
-//   // Create a buffer object
-//   var vertexBuffer = gl.createBuffer();
-//   if (!vertexBuffer) {
-//     console.log('Failed to create the buffer object');
-//     return -1;
-//   }
-
-//   // Bind the buffer object to target
-//   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-//   // Write date into the buffer object
-//   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-
-//   var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-//   if (a_Position < 0) {
-//     console.log('Failed to get the storage location of a_Position');
-//     return -1;
-//   }
-//   // Assign the buffer object to a_Position variable
-//   gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, 0, 0);
-
-//   // Enable the assignment to a_Position variable
-//   gl.enableVertexAttribArray(a_Position);
-
-//   return n;
-// }
 
 // context.strokeStyle = "black"
 
@@ -244,26 +213,35 @@ function generateCircleConnections(){
   new_vertices = []
 
 }
+
+function downloadCoor(stringData, fileName){
+  const blob = new Blob([stringData], { type: 'text/plain' });
+
+  const downloadLink = document.createElement('a');
+  downloadLink.href = URL.createObjectURL(blob);
+  downloadLink.download = fileName; // Specify the filename for the download
+  document.body.appendChild(downloadLink);
+
+  downloadLink.click();
+
+
+}
+
 function generateSOR(){
   generateSORPoints()
   var canvas = document.getElementById('3dCanvas');
   var gl= canvas.getContext('webgl');
-  // Get the strings for our GLSL shaders
   var vertexShaderSource = document.querySelector("#vertex-shader-2d").text;
   var fragmentShaderSource = document.querySelector("#fragment-shader-2d").text;
 
-  // create GLSL shaders, upload the GLSL source, compile the shaders
   var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
   var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-  // Link the two shaders into a program
   var program = createProgram(gl, vertexShader, fragmentShader);
   gl.viewport(0, 0, 500, 500);
 
-  // look up where the vertex data needs to go.
   var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
   gl.clearColor(0, 0, 0, 0);
   gl.clear(gl.COLOR_BUFFER_BIT);
-  // Create a buffer and put three 2d clip space points in it
   for(let i = 0; i < rotated_points.length; i++){
     var positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -286,7 +264,7 @@ function generateSOR(){
     var primitiveType = gl.LINE_LOOP;
     var offset = 0;
     var count = (rotated_points[i].length)/3
-    console.log('curr points: ' + rotated_points[i])
+    // console.log('curr points: ' + rotated_points[i])
     gl.drawArrays(primitiveType, offset, count);
   }
   //drawing the end caps
@@ -295,7 +273,7 @@ function generateSOR(){
   //connect all of the circles
   rotated_points_connections = []
   next_line_counter = 0
-  console.log('length: ' + rotated_points.length)
+  // console.log('length: ' + rotated_points.length)
 
   for(let i = 0; i < rotated_points[0].length; i++){
     rotated_points_connections.push([])
@@ -308,30 +286,21 @@ function generateSOR(){
     }
     next_line_counter += 3
   }
-  console.log('rotated points: ' + rotated_points)
-  console.log('rotated points connectoins: ' + rotated_points_connections)
+  // console.log('rotated points: ' + rotated_points)
+  // console.log('rotated points connectoins: ' + rotated_points_connections)
   for(let i = 0; i < rotated_points_connections.length; i++){
     var positionBuffer = gl.createBuffer();
-    // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer)
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     var positions = rotated_points_connections[i]
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-    // code above this line is initialization code.
-    // code below this line is rendering code.
-    // Tell WebGL how to convert from clip space to pixels
-    // Clear the canvas
-    // Tell it to use our program (pair of shaders)
     gl.useProgram(program);
-    // Turn on the attribute
     gl.enableVertexAttribArray(positionAttributeLocation);
-    // Bind the position buffer.
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
-    var size = 3;          // 2 components per iteration
-    var type = gl.FLOAT;   // the data is 32bit floats
-    var normalize = false; // don't normalize the data
-    var stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
-    var offset = 0;        // start at the beginning of the buffer
+    var size = 3;          
+    var type = gl.FLOAT;   
+    var normalize = false; 
+    var stride = 0;        
+    var offset = 0;        
     gl.vertexAttribPointer(
         positionAttributeLocation, size, type, normalize, stride, offset);
     // draw
@@ -344,12 +313,9 @@ function generateSOR(){
   //drawing the end caps
   boolEndCaps = document.getElementById('drawEndCaps').checked
 
-  console.log('rotated points: ' + rotated_points)
 
   if(boolEndCaps == 1){
     let topEndCapZ = findMaxZ()
-    // console.log('maxZ :' + topEndCapZ)
-    let botEndCapZ = findMinZ()
     topList = rotated_points[topEndCapZ[0]]
     endCapList = []
     for(let i = 0; i < topList.length; i++){
@@ -362,32 +328,18 @@ function generateSOR(){
       }
     }
     var positionBuffer = gl.createBuffer();
-    // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer)
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    // var positions = [
-    //   0, 0,
-    //   0, 0.5,
-    //   0.7, 0,
-    // ];
     var positions = endCapList
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-    // // code above this line is initialization code.
-    // // code below this line is rendering code.
-    // // webglUtils.resizeCanvasToDisplaySize(gl.canvas);
-    // // Tell WebGL how to convert from clip space to pixels
-    // // Clear the canvas
-    // // Tell it to use our program (pair of shaders)
+
     gl.useProgram(program);
-    // // Turn on the attribute
     gl.enableVertexAttribArray(positionAttributeLocation);
-    // // Bind the position buffer.
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    // // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
-    var size = 3;          // 2 components per iteration
-    var type = gl.FLOAT;   // the data is 32bit floats
-    var normalize = false; // don't normalize the data
-    var stride = 0;        // 0 = move forward size * sizeof(type) each iteration to get the next position
-    var offset = 0;        // start at the beginning of the buffer
+    var size = 3;          
+    var type = gl.FLOAT;   
+    var normalize = false; 
+    var stride = 0;        
+    var offset = 0;        
     gl.vertexAttribPointer(
         positionAttributeLocation, size, type, normalize, stride, offset);
     // // draw
@@ -396,6 +348,41 @@ function generateSOR(){
     var count = document.getElementById("n").value; //this will be the value of n
     var count = (endCapList.length)/3
     gl.drawArrays(primitiveType, offset, count);
+
+    let botEndCapZ = findMinZ()
+    botList = rotated_points[botEndCapZ[0]]
+    endCapListTwo = []
+    for(let i = 0; i < botList.length; i++){
+      curr = botList[i]
+      endCapList.push(curr)
+      if((i+1)%3 == 0){
+        endCapListTwo.push(0)
+        endCapListTwo.push(0)
+        endCapListTwo.push(botEndCapZ[1])
+      }
+    }
+    var positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    var positions = endCapListTwo
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+    gl.useProgram(program);
+    gl.enableVertexAttribArray(positionAttributeLocation);
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    var size = 3;          
+    var type = gl.FLOAT;   
+    var normalize = false; 
+    var stride = 0;        
+    var offset = 0;        
+    gl.vertexAttribPointer(
+        positionAttributeLocation, size, type, normalize, stride, offset);
+    // // draw
+    var primitiveType = gl.LINES;
+    var offset = 0;
+    var count = document.getElementById("n").value; //this will be the value of n
+    var count = (endCapListTwo.length)/3
+    gl.drawArrays(primitiveType, offset, count);
+
   }
 
   //generating the files
@@ -408,6 +395,8 @@ function generateSOR(){
   if(boolEndCaps){
     highest_point = (findMaxZ())[1]
     point_list.push(0,0,highest_point)
+    lowest_point = (findMinZ())[1]
+    point_list.push(0,0,lowest_point)
   }
   for(let i = 0; i < rotated_points.length; i++){
     for(let j = 0; j < rotated_points[i].length; j++){
@@ -430,12 +419,97 @@ function generateSOR(){
       coor_file += '\n'
     } 
   }
-  console.log(coor_file)
+  // console.log(coor_file)
+
+  poly_points_list = []
+
+  let poly_counter = 0
+  console.log(rotated_points)
+  for(let i= 0; i < rotated_points.length; i++){
+    poly_points_list.push([])
+    curr_list = poly_points_list[i]
+    for(let j = 0; j < rotated_points[i].length; j++){
+      if(j%3==0){
+        curr_list.push(poly_counter)
+        poly_counter += 1
+      }
+    }
+
+    
+  }
+  pOne = 0
+  pTwo = 1
+  topListIndex = 0
+  bottomListIndex = 1
+
+  polyFile = '';
+  triCounter = 0
+
+  while(bottomListIndex != poly_points_list.length){
+    v1 = poly_points_list[topListIndex][pOne % poly_points_list[topListIndex].length]
+    v2 = poly_points_list[topListIndex][pTwo % poly_points_list[topListIndex].length]
+    v3 = poly_points_list[bottomListIndex][pOne % poly_points_list[bottomListIndex].length]
+    v4 = poly_points_list[bottomListIndex][pTwo % poly_points_list[bottomListIndex].length]
+    polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v2 + ' ' + v4 +'\n'
+    triCounter += 1
+    polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v4 + ' ' + v3 +'\n'
+    triCounter += 1
+    pOne += 1
+    pTwo += 1
+    if(v2 == poly_points_list[topListIndex][0]){
+      pOne = 0
+      pTwo = 1
+      topListIndex += 1
+      bottomListIndex += 1
+    }
+    console.log(polyFile)
+
+    
 
 
+    //add p1, p2, p4
+    //add p1,p4,p3
+  }
+
+  endCapLevelTop = findMaxZ()[0]
+  triCounter += 1
+  endCapP1 = 0
+  endCapP2 = 1
+  
+  while(endCapP2 % poly_points_list[endCapLevelTop].length != 0){
+    v1 = poly_points_list[endCapLevelTop][endCapP1 % poly_points_list[endCapLevelTop].length]
+    v2 = poly_points_list[endCapLevelTop][endCapP2 % poly_points_list[endCapLevelTop].length]
+
+    polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v2 + ' '+ 0 + '\n'
+    endCapP1 += 1
+    endCapP2 += 1
+    triCounter += 1
+  }
+
+  endCapLevelTop = findMinZ()[0]
+  triCounter += 1
+  endCapP1 = 0
+  endCapP2 = 1
+  
+  while(endCapP2 % poly_points_list[endCapLevelTop].length != 0){
+    v1 = poly_points_list[endCapLevelTop][endCapP1 % poly_points_list[endCapLevelTop].length]
+    v2 = poly_points_list[endCapLevelTop][endCapP2 % poly_points_list[endCapLevelTop].length]
+
+    polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v2 + ' ' + 0 + '\n'
+    endCapP1 += 1
+    endCapP2 += 1
+    triCounter += 1
+  }
+
+
+  downloadCoor(coor_file, 'SOR.coor')
+  setTimeout(()=>downloadCoor(polyFile, 'SOR.poly'), 500)
+
+  
 
 }
 
+//notes from webgl fundamentals
   //write shaders
   //compile shaders 
   //link shaders into program
