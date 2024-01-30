@@ -1,3 +1,10 @@
+// import test from './test'
+
+// import { test } from "./test";
+
+
+test()   
+
 //initialize elements that are referenced
 const canvas = document.getElementById('myCanvas');
 const context = canvas.getContext('2d');
