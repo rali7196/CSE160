@@ -1,71 +1,16 @@
 // const fs = require('fs')
 function main(){
-  
 
+  const canvas = document.getElementById('myCanvas');
+  const context = canvas.getContext('2d');
+  point_counter = 1
+  right_clicked = false
 
+  initializeAsgn0Canvas(canvas, context, point_counter, right_clicked)
 
 }
 
 
-
-
-function createShader(gl, type, source) {
-  var shader = gl.createShader(type);
-  gl.shaderSource(shader, source);
-  gl.compileShader(shader);
-  var success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
-  if (success) {
-    return shader;
-  }
-
-  console.log(gl.getShaderInfoLog(shader));
-  gl.deleteShader(shader);
-}
-
-function createProgram(gl, vertexShader, fragmentShader) {
-  var program = gl.createProgram();
-  gl.attachShader(program, vertexShader);
-  gl.attachShader(program, fragmentShader);
-  gl.linkProgram(program);
-  var success = gl.getProgramParameter(program, gl.LINK_STATUS);
-  if (success) {
-    return program;
-  }
-
-  console.log(gl.getProgramInfoLog(program));
-  gl.deleteProgram(program);
-}
-
-//initialize elements that are referenced
-const canvas = document.getElementById('myCanvas');
-const context = canvas.getContext('2d');
-// canvas.origin = {x: 0, y: 0}
-
-//add event listeners
-canvas.addEventListener('mousedown', drawPoint)
-context.beginPath();
-point_counter = 1
-right_clicked = false
-
-//drawing the x and y axis
-function drawLines(){
-    let rectInit = canvas.getBoundingClientRect();
-    context.moveTo(rectInit.right/2,0)
-    context.lineTo(rectInit.right/2, 500)
-    context.strokeStyle = "green";
-    context.stroke()
-    context.beginPath();
-
-    context.moveTo(0, 250)
-    context.lineTo(rectInit.right, 250)
-    context.strokeStyle = "red"
-    context.stroke()
-    context.beginPath();
-    context.strokeStyle = "black"
-}
-drawLines()
-
-// context.strokeStyle = "black"
 
 
 //TODO: 
@@ -76,7 +21,7 @@ drawLines()
     //
 
 var vertices = []
-function drawPoint(e){
+function drawPoint(e, canvas, context){
     //if user has right clicked, stop drawing
     if(right_clicked == true){
         return
