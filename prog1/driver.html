@@ -18,6 +18,8 @@
     <button onclick="getN()">Save Value of N</button>
     <p></p>
     <input type="checkbox" id = "drawEndCaps" min = 0 max = 1 value = 0>Check if you want endcaps</input>
+    <input type="checkbox" id = "downloadFiles" min = 0 max = 1 value = 0>Check if you want to download .coor and .poly</input>
+
     <!-- <button onclick="getDrawEndCaps()">Save option to draw end caps(0 for false, 1 for true)</button> -->
     <p></p>
     <button onclick="generateSOR()">Generate SOR</button>
@@ -40,6 +42,8 @@
     <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
 
     <canvas id="3dCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+
+    <script src="helper_functions.js"></script>
 
 
     <script src="driver.js"></script>

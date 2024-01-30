@@ -1,4 +1,11 @@
 // const fs = require('fs')
+function main(){
+  
+
+
+
+}
+
 
 
 
@@ -55,24 +62,6 @@ function drawLines(){
     context.stroke()
     context.beginPath();
     context.strokeStyle = "black"
-
-    // const outputCanvas = document.getElementById('3dCanvas');
-    // const outputContext = outputCanvas.getContext('2d');
-    // let outputRect = canvas.getBoundingClientRect();
-
-
-    // outputContext.moveTo(outputRect.right/2,0)
-    // outputContext.lineTo(outputRect.right/2, 500)
-    // outputContext.strokeStyle = "green";
-    // outputContext.stroke()
-    // outputContext.beginPath();
-
-    // outputContext.moveTo(0, 250)
-    // outputContext.lineTo(rectInit.right, 250)
-    // outputContext.strokeStyle = "red"
-    // outputContext.stroke()
-    // outputContext.beginPath();
-    // outputContext.strokeStyle = "black"
 }
 drawLines()
 
@@ -85,14 +74,6 @@ drawLines()
     //Figure out how to render shapes in 2d using webgl
     //Figure out how to get triangles from shapes given coordinates
     //
-
-function getN(){
-    var n = document.getElementById("n").value
-}
-
-function getDrawEndCaps(){
-    var n = document.getElementById("drawEndCaps").value
-}
 
 var vertices = []
 function drawPoint(e){
@@ -501,10 +482,11 @@ function generateSOR(){
     triCounter += 1
   }
 
-
-  downloadCoor(coor_file, 'SOR.coor')
-  setTimeout(()=>downloadCoor(polyFile, 'SOR.poly'), 500)
-
+  let downloadFiles = document.getElementById('downloadFiles').checked
+  if(downloadFiles){
+    downloadCoor(coor_file, 'SOR.coor')
+    setTimeout(()=>downloadCoor(polyFile, 'SOR.poly'), 500)
+  }
   
 
 }
