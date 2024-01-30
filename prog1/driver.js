@@ -110,7 +110,6 @@ function generateSOR(){
 
   //generating the .coor file
   point_list = []
-  point_iterator = rotated_points
   let coor_counter = 0
   
   if(boolEndCaps){
@@ -133,6 +132,7 @@ function generateSOR(){
       coor_file += "" + i/3 + ','
     }
     coor_file += "" + point_list[i] + ','
+    //removes trailing comma after every line
     if((i+1)%3 == 0){
       // coor_file += ','
       placeholder = coor_file.slice(0,-1)
@@ -147,7 +147,7 @@ function generateSOR(){
   poly_points_list = []
 
   let poly_counter = 0
-  console.log(rotated_points)
+  // console.log(rotated_points)
   for(let i= 0; i < rotated_points.length; i++){
     poly_points_list.push([])
     curr_list = poly_points_list[i]
@@ -160,6 +160,7 @@ function generateSOR(){
 
     
   }
+  //pointers used for keeping track of triangles
   pOne = 0
   pTwo = 1
   topListIndex = 0
@@ -168,6 +169,7 @@ function generateSOR(){
   polyFile = '';
   triCounter = 0
 
+  //adds all the triangles for the sides
   while(bottomListIndex != poly_points_list.length){
     v1 = poly_points_list[topListIndex][pOne % poly_points_list[topListIndex].length]
     v2 = poly_points_list[topListIndex][pTwo % poly_points_list[topListIndex].length]
@@ -175,7 +177,7 @@ function generateSOR(){
     v4 = poly_points_list[bottomListIndex][pTwo % poly_points_list[bottomListIndex].length]
     polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v2 + ' ' + v4 +'\n'
     triCounter += 1
-    polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v4 + ' ' + v3 +'\n'
+    polyFile += 'tri' + triCounter + ' ' + v3 + ' ' + v4 + ' ' + v1 +'\n'
     triCounter += 1
     pOne += 1
     pTwo += 1
@@ -185,11 +187,7 @@ function generateSOR(){
       topListIndex += 1
       bottomListIndex += 1
     }
-    console.log(polyFile)
-
-    
-
-
+    // console.log(polyFile)
     //add p1, p2, p4
     //add p1,p4,p3
   }
