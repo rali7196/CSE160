@@ -1,4 +1,5 @@
-// const fs = require('fs')
+
+
 var vertices = []
 
 function main(){
@@ -34,7 +35,6 @@ function generateSOR(){
       positionAttributeLocation, gl.LINE_LOOP, 
       (rotated_points[i].length)/3)
   }
-  //drawing the end caps
 
 
   //connect all of the circles by, starting from the top 
@@ -108,9 +108,19 @@ function generateSOR(){
 
   //generating the files
 
-  //generating the .coor file
+  countTriangles(boolEndCaps, rotated_points)
   generateFiles(boolEndCaps, rotated_points)
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

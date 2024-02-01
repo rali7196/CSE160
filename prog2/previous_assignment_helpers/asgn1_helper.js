@@ -62,7 +62,7 @@ function findMaxZ(){
 function findMinZ(){
     minZ = vertices[2]
     for(let i = 2; i < vertices.length; i++){
-      if(minZ < vertices[i] && (i+1) % 3 == 0){
+      if(minZ > vertices[i] && (i+1) % 3 == 0){
         minZ = vertices[i]
       }
     }
@@ -149,11 +149,11 @@ function generateFiles(boolEndCaps, rotated_points){
 
   //adds all the triangles for the sides
   while(bottomListIndex != poly_points_list.length){
-    v1 = poly_points_list[topListIndex][pOne % poly_points_list[topListIndex].length]
-    v2 = poly_points_list[topListIndex][pTwo % poly_points_list[topListIndex].length]
-    v3 = poly_points_list[bottomListIndex][pOne % poly_points_list[bottomListIndex].length]
-    v4 = poly_points_list[bottomListIndex][pTwo % poly_points_list[bottomListIndex].length]
-    polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v2 + ' ' + v4 +'\n'
+    let v1 = poly_points_list[topListIndex][pOne % poly_points_list[topListIndex].length]
+    let v2 = poly_points_list[topListIndex][pTwo % poly_points_list[topListIndex].length]
+    let v3 = poly_points_list[bottomListIndex][pOne % poly_points_list[bottomListIndex].length]
+    let v4 = poly_points_list[bottomListIndex][pTwo % poly_points_list[bottomListIndex].length]
+    polyFile += 'tri' + triCounter + ' ' + v4 + ' ' + v2 + ' ' + v1 +'\n'
     triCounter += 1
     polyFile += 'tri' + triCounter + ' ' + v3 + ' ' + v4 + ' ' + v1 +'\n'
     triCounter += 1
@@ -177,8 +177,8 @@ function generateFiles(boolEndCaps, rotated_points){
   endCapP2 = 1
   
   while(endCapP2 % poly_points_list[endCapLevelTop].length != 0){
-    v1 = poly_points_list[endCapLevelTop][endCapP1 % poly_points_list[endCapLevelTop].length]
-    v2 = poly_points_list[endCapLevelTop][endCapP2 % poly_points_list[endCapLevelTop].length]
+    let v1 = poly_points_list[endCapLevelTop][endCapP1 % poly_points_list[endCapLevelTop].length]
+    let v2 = poly_points_list[endCapLevelTop][endCapP2 % poly_points_list[endCapLevelTop].length]
 
     polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v2 + ' '+ 0 + '\n'
     endCapP1 += 1
@@ -192,8 +192,8 @@ function generateFiles(boolEndCaps, rotated_points){
   endCapP2 = 1
   
   while(endCapP2 % poly_points_list[endCapLevelTop].length != 0){
-    v1 = poly_points_list[endCapLevelTop][endCapP1 % poly_points_list[endCapLevelTop].length]
-    v2 = poly_points_list[endCapLevelTop][endCapP2 % poly_points_list[endCapLevelTop].length]
+    let v1 = poly_points_list[endCapLevelTop][endCapP1 % poly_points_list[endCapLevelTop].length]
+    let v2 = poly_points_list[endCapLevelTop][endCapP2 % poly_points_list[endCapLevelTop].length]
 
     polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v2 + ' ' + 0 + '\n'
     endCapP1 += 1
@@ -202,8 +202,9 @@ function generateFiles(boolEndCaps, rotated_points){
   }
 
   let downloadFiles = document.getElementById('downloadFiles').checked
+  console.log()
   if(downloadFiles){
     downloadCoor(coor_file, 'SOR.coor')
-    setTimeout(()=>downloadCoor(polyFile, 'SOR.poly'), 500)
+    setTimeout(()=>downloadCoor(polyFile, 'SOR.poly'), 5000)
   }
 }

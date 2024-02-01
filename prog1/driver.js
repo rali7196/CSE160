@@ -169,10 +169,10 @@ function generateSOR(){
 
   //adds all the triangles for the sides
   while(bottomListIndex != poly_points_list.length){
-    v1 = poly_points_list[topListIndex][pOne % poly_points_list[topListIndex].length]
-    v2 = poly_points_list[topListIndex][pTwo % poly_points_list[topListIndex].length]
-    v3 = poly_points_list[bottomListIndex][pOne % poly_points_list[bottomListIndex].length]
-    v4 = poly_points_list[bottomListIndex][pTwo % poly_points_list[bottomListIndex].length]
+    let v1 = poly_points_list[topListIndex][pOne % poly_points_list[topListIndex].length]
+    let v2 = poly_points_list[topListIndex][pTwo % poly_points_list[topListIndex].length]
+    let v3 = poly_points_list[bottomListIndex][pOne % poly_points_list[bottomListIndex].length]
+    let v4 = poly_points_list[bottomListIndex][pTwo % poly_points_list[bottomListIndex].length]
     polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v2 + ' ' + v4 +'\n'
     triCounter += 1
     polyFile += 'tri' + triCounter + ' ' + v3 + ' ' + v4 + ' ' + v1 +'\n'
@@ -197,8 +197,8 @@ function generateSOR(){
   endCapP2 = 1
   
   while(endCapP2 % poly_points_list[endCapLevelTop].length != 0){
-    v1 = poly_points_list[endCapLevelTop][endCapP1 % poly_points_list[endCapLevelTop].length]
-    v2 = poly_points_list[endCapLevelTop][endCapP2 % poly_points_list[endCapLevelTop].length]
+    let v1 = poly_points_list[endCapLevelTop][endCapP1 % poly_points_list[endCapLevelTop].length]
+    let v2 = poly_points_list[endCapLevelTop][endCapP2 % poly_points_list[endCapLevelTop].length]
 
     polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v2 + ' '+ 0 + '\n'
     endCapP1 += 1
@@ -212,8 +212,8 @@ function generateSOR(){
   endCapP2 = 1
   
   while(endCapP2 % poly_points_list[endCapLevelTop].length != 0){
-    v1 = poly_points_list[endCapLevelTop][endCapP1 % poly_points_list[endCapLevelTop].length]
-    v2 = poly_points_list[endCapLevelTop][endCapP2 % poly_points_list[endCapLevelTop].length]
+    let v1 = poly_points_list[endCapLevelTop][endCapP1 % poly_points_list[endCapLevelTop].length]
+    let v2 = poly_points_list[endCapLevelTop][endCapP2 % poly_points_list[endCapLevelTop].length]
 
     polyFile += 'tri' + triCounter + ' ' + v1 + ' ' + v2 + ' ' + 0 + '\n'
     endCapP1 += 1

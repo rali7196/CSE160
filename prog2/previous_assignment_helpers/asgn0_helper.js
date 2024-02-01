@@ -28,9 +28,9 @@ function initializeAsgn0Canvas(canvas, context){
     context.stroke()
     context.beginPath();
     context.strokeStyle = "black"
-    drawLines(canvas, context)
+    // drawLines(canvas, context)
     
-    context.strokeStyle = "black"
+    // context.strokeStyle = "black"
 }
 
 
@@ -57,7 +57,7 @@ function drawPoint(e, canvas, context){
         vertices.push(normZ)
         // console.log("normZ "+normZ)
         // console.log("normX "+normX)
-        vertices_length = vertices_length + 3
+        // vertices_length = vertices_length + 3
 
     }
     //continuously draw lines until user presses RMB
@@ -69,7 +69,7 @@ function drawPoint(e, canvas, context){
         vertices.push(normX)
         vertices.push(0)
         vertices.push(normZ)
-        vertices_length = vertices_length + 3
+        // vertices_length = vertices_length + 3
 
         if(e.buttons == 2){
             right_clicked = true
