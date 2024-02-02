@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <h1>Programming Assignment 1 Demo</h1>
+    <h1>Programming Assignment 2 Demo</h1>
     <h2>Please allow your browser to download multiple files to see .coor and .poly files.
       Also, refresh the page everytime you want to draw a new shape
     </h2>
@@ -22,7 +22,7 @@
 
     <!-- <button onclick="getDrawEndCaps()">Save option to draw end caps(0 for false, 1 for true)</button> -->
     <p></p>
-    <button onclick="generateSOR()">Generate SOR</button>
+    <button onclick="generateSORNew('3dCanvas', 500, 500)">Generate SOR</button>
     <button>Generate New SOR</button>
 
     <P></P>
@@ -44,12 +44,21 @@
 
     <canvas id="3dCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
 
+    <h2>This is the output of assignment 2</h2>
+
+    <input type="range" id="translationSlider">
+    <p>Translation Slider</p>
+
     <canvas id="asgn2Canvas" width="500" height="500" style="border:1px solid #000000"></canvas>
     
     
     <script src="previous_assignment_helpers/asgn0_helper.js"></script>
     <script src="previous_assignment_helpers/asgn1_helper.js"></script>
-    <script src="previous_assignment_helpers/asgn2_helper.js"></script>
+    <script src="previous_assignment_helpers/asgn2_functions/asgn2_helper.js"></script>
+    <script src="previous_assignment_helpers/asgn2_functions/wireframe_rendering.js"></script>
+
+
+    <script src="../lib/cuon-matrix.js"></script>
 
     <script src="webgl_utils.js"></script>
     <script src="driver.js"></script>
