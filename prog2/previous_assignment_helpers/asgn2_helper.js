@@ -70,7 +70,7 @@ function countTriangles(boolEndCaps, rotated_points){
     bottomListIndex = 1
 
     //contains the vertex indices for all triangles within the shape
-    triangle_indices=[]
+    let triangle_indices=[]
 
     //this while loop counts all of the triangles on each face of the SOR
     while(bottomListIndex != poly_points_list.length){
@@ -112,6 +112,9 @@ function countTriangles(boolEndCaps, rotated_points){
     //do same for top end cap list
 
     //bottom end cap is current poly_counter, top end cap is poly_counter += 1
+    if(!boolEndCaps){
+      return triangle_indices
+    }
     pOne = 0
     pTwo = 1
     let v1 = 0
@@ -142,5 +145,5 @@ function countTriangles(boolEndCaps, rotated_points){
       pOne += 1
       pTwo += 1
     }while(v2 != 0);
-    // return
+    return triangle_indices
 }

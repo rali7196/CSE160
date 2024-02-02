@@ -16,6 +16,10 @@ function main(){
 
 function generateSOR(){
   let rotated_points = generateSORPoints()
+
+  //need to translate rotated points by multiplying composite matrix by each point
+  
+
   var canvas = document.getElementById('3dCanvas');
   var gl= canvas.getContext('webgl');
   var vertexShaderSource = document.querySelector("#vertex-shader-2d").text;
@@ -27,7 +31,7 @@ function generateSOR(){
   gl.viewport(0, 0, 500, 500);
 
   var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
-  gl.clearColor(0, 0, 0, 0);
+  gl.clearColor(0, 0, 0, 1);
   gl.clear(gl.COLOR_BUFFER_BIT);
   //draws the connection between each "circle" in the SOR
   for(let i = 0; i < rotated_points.length; i++){
@@ -108,7 +112,7 @@ function generateSOR(){
 
   //generating the files
 
-  countTriangles(boolEndCaps, rotated_points)
+  let triangle_indices = countTriangles(boolEndCaps, rotated_points)
   generateFiles(boolEndCaps, rotated_points)
 }
 
