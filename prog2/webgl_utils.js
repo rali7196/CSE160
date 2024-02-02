@@ -16,8 +16,12 @@ function createProgram(gl, vertexShader, fragmentShader) {
   gl.attachShader(program, vertexShader);
   gl.attachShader(program, fragmentShader);
   gl.linkProgram(program);
+  gl.useProgram(program)
+  gl.program = program
   var success = gl.getProgramParameter(program, gl.LINK_STATUS);
   if (success) {
+    gl.useProgram(program)
+    gl.program = program
     return program;
   }
 
@@ -52,7 +56,18 @@ function webGLDraw(gl, positions, program,
     // var count = (rotated_points[i].length)/3
     // console.log('curr points: ' + rotated_points[i])
     gl.drawArrays(primitiveType, offset, count);
+}
 
+function getWebGLProgram(){
+  var gl= canvas.getContext('webgl');
+  var vertexShaderSource = document.querySelector("#vertex-shader-2d").text;
+  var fragmentShaderSource = document.querySelector("#fragment-shader-2d").text;
 
+  // var vertexShaderSource = document.querySelector("#"+vertexShader).text;
+  // var fragmentShaderSource = document.querySelector("#"+fragmentShader).text;
 
+  var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+  var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+  var program = createProgram(gl, vertexShader, fragmentShader);
+  return program
 }

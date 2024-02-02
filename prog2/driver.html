@@ -15,14 +15,14 @@
     <input type="number" id="n" min = 1 ></input>
 
     <!-- <canvas id="myCanvas" width="400" height="200"></canvas> -->
-    <button onclick="getN()">Save Value of N</button>
+    <!-- <button onclick="getN()">Save Value of N</button> -->
     <p></p>
     <input type="checkbox" id = "drawEndCaps" min = 0 max = 1 value = 0>Check if you want endcaps</input>
     <input type="checkbox" id = "downloadFiles" min = 0 max = 1 value = 0>Check if you want to download .coor and .poly</input>
 
     <!-- <button onclick="getDrawEndCaps()">Save option to draw end caps(0 for false, 1 for true)</button> -->
     <p></p>
-    <button onclick="generateSORNew('3dCanvas', 500, 500)">Generate SOR</button>
+    <button onclick="SORWrapper()">Generate SOR</button>
     <button>Generate New SOR</button>
 
     <P></P>
@@ -39,6 +39,14 @@
         }
        
       </script>
+
+      <script id="vertex-shader-2d-asgn2" type="notjs">
+        attribute vec4 a_position;
+        uniform mat4 transformation;
+        void main() {
+          gl_Position = transformation * a_position;
+        }
+      </script>
     
     <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
 
@@ -46,11 +54,25 @@
 
     <h2>This is the output of assignment 2</h2>
 
-    <input type="range" id="translationSlider">
-    <p>Translation Slider</p>
+    <input type="range" id="rotationSliderX" min="0" max="360">
+    <p>X Rotation Slider</p>
+
+    <input type="range" id="rotationSliderY" min="0" max="360">
+    <p>Y Rotation Slider</p>
+
+    <input type="range" id="rotationSliderZ" min="0" max="360">
+    <p>Z Rotation Slider</p>
+
+    <input type="range" id="translationSliderX" min="-100" max="100">
+    <p>X Translation Slider</p>
+
+
 
     <canvas id="asgn2Canvas" width="500" height="500" style="border:1px solid #000000"></canvas>
     
+
+    <script src="../lib/cuon-matrix.js"></script>
+
     
     <script src="previous_assignment_helpers/asgn0_helper.js"></script>
     <script src="previous_assignment_helpers/asgn1_helper.js"></script>
@@ -58,13 +80,13 @@
     <script src="previous_assignment_helpers/asgn2_functions/wireframe_rendering.js"></script>
 
 
-    <script src="../lib/cuon-matrix.js"></script>
 
     <script src="webgl_utils.js"></script>
     <script src="driver.js"></script>
 
     <script>
       main()
+      
     </script>
 
 </body>
