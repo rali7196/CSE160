@@ -169,5 +169,12 @@ function transformationListenerInit(){
   rangeInput.addEventListener('input', ()=>{ 
      generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
   })
+}
+
+function SORWrapper(){
+  generateSORNew("3dCanvas", 500, 500, "vertex-shader-2d", "fragment-shader-2d")
+  // initTransformation()
+  // generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
+  drawSORWithTriangles("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
 
 }

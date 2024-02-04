@@ -23,11 +23,7 @@ function myRotateX(gl, program){
 }
 
 
-function SORWrapper(){
-  generateSORNew("3dCanvas", 500, 500, "vertex-shader-2d", "fragment-shader-2d")
-  // initTransformation()
-  generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
-}
+
 
 
 
@@ -255,7 +251,6 @@ function generateSORNew(canvasName, canvasWidth, canvasHeight, vertexShaderName,
   
     //generating the files
   
-    let triangle_indices = countTriangles(boolEndCaps, rotated_points)
     generateFiles(boolEndCaps, rotated_points)
   }
   

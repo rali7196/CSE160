@@ -40,7 +40,6 @@ function webGLDraw(gl, positions, program,
 
     gl.useProgram(program);
     gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     var size = 3;         
     var type = gl.FLOAT;   
     var normalize = false; 
@@ -70,4 +69,41 @@ function getWebGLProgram(){
   var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
   var program = createProgram(gl, vertexShader, fragmentShader);
   return program
+}
+
+
+function webGLDrawTrianglesFromIndices(gl, positions, triangleIndices, program, 
+  positionAttributeLocation){
+
+    //writing to array_buffer
+    var positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    // var positions = rotated_points[i]
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+    
+
+    //writing to element_buffer
+    let elementBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, elementBuffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(triangleIndices), gl.STATIC_DRAW);
+
+    gl.useProgram(program);
+    gl.enableVertexAttribArray(positionAttributeLocation);
+    var size = 3;         
+    var type = gl.FLOAT;   
+    var normalize = false; 
+    var stride = 0;        
+    var offset = 0;        
+    gl.vertexAttribPointer(positionAttributeLocation, size, type, 
+      normalize, stride, offset);
+    
+    // draw
+
+    // var primitiveType = gl.LINE_LOOP;
+    var offset = 0;
+    // var count = (rotated_points[i].length)/3
+    // console.log('curr points: ' + rotated_points[i])
+    // gl.drawArrays(primitiveType, offset, count);
+    gl.drawElements(gl.TRIANGLES, triangleIndices.length, gl.UNSIGNED_SHORT, offset)
+
 }
