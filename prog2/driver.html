@@ -23,7 +23,6 @@
     <!-- <button onclick="getDrawEndCaps()">Save option to draw end caps(0 for false, 1 for true)</button> -->
     <p></p>
     <button onclick="SORWrapper()">Generate SOR</button>
-    <button>Generate New SOR</button>
 
     <P></P>
     <script id="vertex-shader-2d" type="notjs">
@@ -53,19 +52,27 @@
     <canvas id="3dCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
 
     <h2>This is the output of assignment 2</h2>
-    <p>X Rotation Slider</p>
-    <input type="range" id="rotationSliderX" min="0" max="360">
- 
-    <p>Y Rotation Slider</p>
-    <input type="range" id="rotationSliderY" min="0" max="360">
+    <p style="display: inline-block;">X Rotation Slider</p>
+
+    <input type="range" id="rotationSliderX" min="0" max="360" >
+
+    <p style="display: inline-block;">Y Rotation Slider</p> 
+    <input type="range" id="rotationSliderY" min="0" max="360"  >
     
-    <p>Z Rotation Slider</p>
+    <p style="display: inline-block;">Z Rotation Slider</p>
     <input type="range" id="rotationSliderZ" min="0" max="360">
     
-    <p>X Translation Slider</p>
-    <input type="range" id="translationSliderX" min="-100" max="100">
+    <p style="display: inline-block;">X Translation Slider</p>
+    <input type="range" id="translationSliderX" min="-100" max="100" style="display: inline-block;">
     <p></p>
     
+    <input type="checkbox" id = "renderOption" min = 0 max = 1 value = 0 style="display: inline-block;">
+    Check if you want diffuse lighting, uncheck if you want wireframe
+    </input>
+
+    <!-- <p>X Translation Slider</p>
+    <input type="range" id="translationSliderX" min="-100" max="100"> -->
+    <p></p>
 
 
 

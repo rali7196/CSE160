@@ -152,29 +152,33 @@ function countTriangles(boolEndCaps, rotated_points){
 function transformationListenerInit(){
   let rangeInput = document.getElementById("rotationSliderX")
   rangeInput.addEventListener('input', ()=>{ 
-     generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
-  })
+    SORWrapper()  })
 
   rangeInput = document.getElementById("rotationSliderY")
   rangeInput.addEventListener('input', ()=>{ 
-     generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
-  })
+    SORWrapper()  })
 
   rangeInput = document.getElementById("rotationSliderZ")
   rangeInput.addEventListener('input', ()=>{ 
-     generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
-  })
+    SORWrapper()  })
 
   rangeInput = document.getElementById("translationSliderX")
   rangeInput.addEventListener('input', ()=>{ 
-     generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
-  })
+    SORWrapper()  })
+
+  rangeInput = document.getElementById("renderOption")
+  rangeInput.addEventListener('input', ()=>{ 
+    SORWrapper()  })
 }
 
 function SORWrapper(){
   generateSORNew("3dCanvas", 500, 500, "vertex-shader-2d", "fragment-shader-2d")
   // initTransformation()
-  // generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
-  drawSORWithTriangles("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
+  let renderOption = document.getElementById('renderOption').checked
+  if(!renderOption){
+    generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
+  } else {
+    drawSORWithTriangles("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
+  }
 
 }
