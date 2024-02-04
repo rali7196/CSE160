@@ -27,6 +27,7 @@ function findEndCapLevel(rotated_points, minZ, maxZ){
 
 
 //counts all of the triangles in rotated points
+//returns a 1d array of all triangle locations
 function countTriangles(boolEndCaps, rotated_points){
     //1d array that contains all x,y, and z coordinates [x1,y1,z1,x2,y2,z2 ...]
     point_list = []

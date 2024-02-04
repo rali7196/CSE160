@@ -109,10 +109,10 @@ function generateSORNewTransformation(canvasName, canvasWidth, canvasHeight, ver
   //same process is repeated for bottom endcap
   if(boolEndCaps == 1){
     let topEndCapZ = findMaxZ()
-    topList = rotated_points[topEndCapZ[0]]
-    endCapList = []
+    let topList = rotated_points[topEndCapZ[0]]
+    let endCapList = []
     for(let i = 0; i < topList.length; i++){
-      curr = topList[i]
+      let curr = topList[i]
       endCapList.push(curr)
       if((i+1)%3 == 0){
         endCapList.push(0)
@@ -127,11 +127,11 @@ function generateSORNewTransformation(canvasName, canvasWidth, canvasHeight, ver
 
 
     let botEndCapZ = findMinZ()
-    botList = rotated_points[botEndCapZ[0]]
-    endCapListTwo = []
+    let botList = rotated_points[botEndCapZ[0]]
+    let endCapListTwo = []
     for(let i = 0; i < botList.length; i++){
-      curr = botList[i]
-      endCapList.push(curr)
+      let curr = botList[i]
+      endCapListTwo.push(curr)
       if((i+1)%3 == 0){
         endCapListTwo.push(0)
         endCapListTwo.push(0)
