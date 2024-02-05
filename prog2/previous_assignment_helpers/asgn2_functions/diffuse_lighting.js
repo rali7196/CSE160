@@ -1,7 +1,34 @@
 //rendering wireframe with triangles
 
 function diffuseLightingInit(gl, program){
-    //get the rotation matrix, find inverse transpose of it, and then set the 
+    //get the rotation matrix, find inverse transpose of it, and then set the
+    
+    //calculate normals
+    let normals = calculateNormals(triangle_list, boolEndCaps)
+
+    //write normals into buffer
+    let normals_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, normals_buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.STATIC_DRAW);
+
+    let location = gl.getAttribLocation(program, 'a_normal');
+    gl.vertexAttribPointer(location, 3, gl.FLOAT, false, 0,0);
+    gl.enableVertexAttribArray(location);
+
+    //initialize lighting
+    let gl_light_color = gl.getUniformLocation(program, 'light_color');
+
+    gl.uniform3f(gl_light_color, 1.0,1.0,1.0);
+    
+    let gl_light_direction = gl.getUniformLocation(program, 'light_direction');
+    let light_direction = new Vector3([1.0,1.0,1.0])
+    light_direction.normalize();
+    gl.uniform3fv(gl_light_direction, light_direction.elements)
+
+
+
+
+    
 
 }
 
@@ -42,13 +69,14 @@ function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShade
     gl.viewport(0, 0, canvasWidth, canvasHeight);//500, 500
   
     var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
-    gl.clearColor(0, 0, 0, 1);
+    gl.clearColor(0, 1, 0, 0.5);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     myRotateX(gl, program)
 
+    diffuseLightingInit(gl, program)
+
     webGLDrawTrianglesFromIndices(gl, positions_list, triangle_list, program, positionAttributeLocation)
-    let normals = calculateNormals(triangle_list, boolEndCaps)
 
     //start to draw triangles for this area
 }

@@ -1,3 +1,5 @@
+
+//initializes various transformations to be performed on SOR
 function myRotateX(gl, program){
   let transformation_matrix = new Matrix4()
 
@@ -6,9 +8,6 @@ function myRotateX(gl, program){
   let angleZ = document.getElementById('rotationSliderZ').value
 
   let translationX = (document.getElementById('translationSliderX').value) / 100
-
-
-
 
 
   transformation_matrix.setRotate(angleX,1,0, 0)
@@ -20,6 +19,14 @@ function myRotateX(gl, program){
 
   var positionAttributeLocationConst = gl.getUniformLocation(program, "transformation");
   gl.uniformMatrix4fv(positionAttributeLocationConst, false, transformation_matrix.elements);
+
+  let normal_transformation_matrix = new Matrix4();
+  normal_transformation_matrix.setInverseOf(transformation_matrix)
+  normal_transformation_matrix.transpose()
+
+  var glsl_transformation_matrix = gl.getUniformLocation(program, 'normal_transformation');
+  gl.uniformMatrix4fv(glsl_transformation_matrix, false, normal_transformation_matrix.elements);
+
 }
 
 
