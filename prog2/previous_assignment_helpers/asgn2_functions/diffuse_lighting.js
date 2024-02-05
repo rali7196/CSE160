@@ -34,7 +34,7 @@ function diffuseLightingInit(gl, program, triangle_list, boolEndCaps){
 
 
 
-function drawSORWithTriangles(gl, program, second){
+function drawSORWithTriangles(gl, program, second, surfaceColor, primitiveType){
     //get 1d array of all coordinates
     //get the triangles
     //create new webgl function to draw from triangles
@@ -46,7 +46,8 @@ function drawSORWithTriangles(gl, program, second){
             positions_list.push(rotated_points[i][j])
         }
     }
-    let boolEndCaps = document.getElementById('drawEndCaps').checked
+    // let boolEndCaps = document.getElementById('drawEndCaps').checked
+    boolEndCaps = true;
 
     if(boolEndCaps){
         highest_point = (findMaxZ())[1]
@@ -78,9 +79,9 @@ function drawSORWithTriangles(gl, program, second){
     let colors = [];
     for(let i = 0; i < positions_list.length; i++){
         if(i%3 == 0){
-            colors.push(1.0)
-            colors.push(0.0)
-            colors.push(0.0)
+            colors.push(surfaceColor[0])
+            colors.push(surfaceColor[1])
+            colors.push(surfaceColor[2])
         }
     }
 
@@ -95,16 +96,16 @@ function drawSORWithTriangles(gl, program, second){
     gl.enableVertexAttribArray(location);
 
 
-    gl.clearColor(0, 0, 0, 1);
+    // gl.clearColor(0, 0, 0, 1);
     gl.enable(gl.DEPTH_TEST);
     gl.enable(gl.CULL_FACE);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.clear(gl.DEPTH_BUFFER_BIT);
 
     myRotateX(gl, program, second)
 
     diffuseLightingInit(gl, program, triangle_list, boolEndCaps)
 
-    webGLDrawTrianglesFromIndices(gl, positions_list, triangle_list, program, positionAttributeLocation, gl.TRIANGLES)
+    webGLDrawTrianglesFromIndices(gl, positions_list, triangle_list, program, positionAttributeLocation, primitiveType)
 
     //start to draw triangles for this area
 }

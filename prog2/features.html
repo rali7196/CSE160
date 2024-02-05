@@ -7,32 +7,33 @@
 </head>
 <body>
 
-    <h1>Programming Assignment 0 Features</h1>
+    <h1>Programming Assignment 2 Features</h1>
     <p>Name: Rehan Ali</p>
     <p>ID: rali3</p>
-    <p>Date: January 22nd, 2024</p>
+    <p>Date: Febuary 5th, 2024</p>
     <a href = "driver.html">Driver Code</a>
     <h2>Overview of Features</h2>
-    <p>
-        This assignemnt involved taking the output from the previous assignment and 
-        revolving it around the z axis in the three dimensional plane. In order to do this,
-        I took all the points from the user's 2d drawing, and then used trigonometry
-        to calculate where each point would be if I rotated it by theta degrees. Then,
-        using WebGL, I was able to successfully render the object. I did this by strategically
-        splitting the points into arrays that WebGL could parse via its drawarrays() function. 
-        What this function does is it takes an array of vertices, and a drawing mode,
-        and then it simply draws the vertices. This function proved to be very useful in rendering
-        my shape. 
+    <p>This assignment contains three canvases: The one with the green and red line is the initial canvas you draw on.
+        After clicking generate SOR, the canvas on the right will show the original SOR. Then,<b> you need to scroll down to
+        the canvas on the bottom, which shows the output of assignment two</b>. You can use the sliders to apply transformations
+        to both shapes in the scene. Additionally, you can click the checkbox in order to switch between wireframe rendering
+        and flat shading. I recommend you enable the endcaps for a better viewing experience when using the flat shading. 
     </p>
     <p>
-        One of the more complex parts of this assignment was learning how to use WebGL.
-        In particular, I found writing all of the setup code for WebGL to be especially difficult
-        due to how unfamiliar I was with it. Despite this, I learned a lot about how webGL works, and how 
-        all of the boilerplate code is used to setup the drawarrays() function. Additionally,
-        I found the concept of vertex shaders and fragment shaders to be particularly interesting. 
+        This assignment involved taking the output from the previous assignment, a .poly file and a .coor file, and 
+        doing two things to it: applying directional lighting and transformations to it. To do this, I first
+        calculated all of the normals from the triangles. I did this by taking the first vertex, and calculating two 
+        vectors from the triangle. Then, I was able to use the cross product to calculate each normal of each triangle, 
+        which was then used to calculate the light of the surface after applying directional lighting. As for the 
+        transformations, I used the library provided by the textbook after asking Minghao if I could use their library
+        for matrix operations. I used this library to calculate the transformation matricies for the given transformations,
+        and then in the vertex shader I applied this transformation matrix to each vertex. 
     </p>
     <!-- <h2>Output Image</h2>
     <img src="prog_1_output.png"> -->
+    <img src="diffuse_lighting.png">
+    <img src="wireframe_rending.png">
+    
 
 
 

@@ -178,7 +178,7 @@ function SORWrapper(){
   var gl= canvas.getContext('webgl');
 
   let renderOption = document.getElementById('renderOption').checked
-  let needed = initializeProgram(gl, "vertex-shader-2d", "fragment-shader-2d")
+  let needed = initializeProgram(gl, "vertex-shader-2d-2", "fragment-shader-2d-2")
   // let gl = needed[0];
   // let program = needed[1];
   let program = needed
@@ -202,11 +202,14 @@ function SORWrapper(){
     generateSORNewTransformation(gl, program, true)
 
 
+
   } else {
 
     let program2 = initializeProgram(gl, 'vertex-shader-2d-asgn2', 'fragment-shader-2d-asgn2');
-    drawSORWithTriangles(gl, program2, false)
-    drawSORWithTriangles(gl, program2, true)
+    gl.clear(gl.COLOR_BUFFER_BIT)
+    
+    drawSORWithTriangles(gl, program2, false, [1.0,0.0,0.0], gl.TRIANGLES)
+    drawSORWithTriangles(gl, program2, true, [0.0,1.0,0.0], gl.TRIANGLES)
 
   }
 

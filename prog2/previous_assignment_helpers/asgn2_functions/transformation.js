@@ -106,7 +106,8 @@ function generateSORNewTransformation(gl, program, second){
 
   }
   //drawing the end caps
-  boolEndCaps = document.getElementById('drawEndCaps').checked
+  // boolEndCaps = document.getElementById('drawEndCaps').checked
+  boolEndCaps = true
 
   //draws lines between the center point and every point
   //in the top circle
@@ -215,7 +216,8 @@ function generateSORNew(canvasName, canvasWidth, canvasHeight, vertexShaderName,
   
     }
     //drawing the end caps
-    boolEndCaps = document.getElementById('drawEndCaps').checked
+    // boolEndCaps = document.getElementById('drawEndCaps').checked\
+    boolEndCaps = true;
   
     //draws lines between the center point and every point
     //in the top circle
