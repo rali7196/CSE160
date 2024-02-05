@@ -1,6 +1,6 @@
 
 //initializes various transformations to be performed on SOR
-function myRotateX(gl, program){
+function myRotateX(gl, program, second){
   let transformation_matrix = new Matrix4()
 
   let angleX = document.getElementById('rotationSliderX').value
@@ -15,7 +15,11 @@ function myRotateX(gl, program){
   transformation_matrix.rotate(angleY, 0,1,0)
   transformation_matrix.rotate(angleZ, 0,0,1)
 
-  transformation_matrix.translate(0,translationX,0)
+  if(second){
+    transformation_matrix.translate(translationX+0.4,0,0)
+  } else {
+    transformation_matrix.translate(translationX-0.4,0,0)
+  }
 
   var positionAttributeLocationConst = gl.getUniformLocation(program, "transformation");
   gl.uniformMatrix4fv(positionAttributeLocationConst, false, transformation_matrix.elements);
@@ -36,26 +40,27 @@ function myRotateX(gl, program){
 
 
 
-function generateSORNewTransformation(canvasName, canvasWidth, canvasHeight, vertexShaderName, fragmentShaderName){
-  let rotated_points = generateSORPoints()
+function generateSORNewTransformation(gl, program, second, boolClear){
 
   //need to translate rotated points by multiplying composite matrix by each point
+  let rotated_points = generateSORPoints()
   
 
-  var canvas = document.getElementById(canvasName);//3dCanvas
-  var gl= canvas.getContext('webgl');
-  var vertexShaderSource = document.querySelector('#'+vertexShaderName).text;
-  var fragmentShaderSource = document.querySelector('#'+fragmentShaderName).text;
+  // var canvas = document.getElementById(canvasName);//3dCanvas
+  // var gl= canvas.getContext('webgl');
+  // var vertexShaderSource = document.querySelector('#'+vertexShaderName).text;
+  // var fragmentShaderSource = document.querySelector('#'+fragmentShaderName).text;
 
-  var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-  var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-  var program = createProgram(gl, vertexShader, fragmentShader);
-  gl.viewport(0, 0, canvasWidth, canvasHeight);//500, 500
+  // var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+  // var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+  // var program = createProgram(gl, vertexShader, fragmentShader);
+  // gl.viewport(0, 0, canvasWidth, canvasHeight);//500, 500
 
   var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
-  gl.clearColor(0, 0, 0, 1);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-
+  if(boolClear){
+    gl.clearColor(0, 0, 0, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+  }
 
   // let transformation_matrix = new Matrix4()
   // transformation_matrix.setRotate(70,0,1, 0)
@@ -63,7 +68,7 @@ function generateSORNewTransformation(canvasName, canvasWidth, canvasHeight, ver
   // var positionAttributeLocationConst = gl.getUniformLocation(program, "transformation");
   // gl.uniformMatrix4fv(positionAttributeLocationConst, false, transformation_matrix.elements);
 
-  myRotateX(gl, program)
+  myRotateX(gl, program, second)
 
 
 

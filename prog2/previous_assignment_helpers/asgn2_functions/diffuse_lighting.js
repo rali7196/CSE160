@@ -21,7 +21,7 @@ function diffuseLightingInit(gl, program, triangle_list, boolEndCaps){
     gl.uniform3f(gl_light_color, 1.0,1.0,1.0);
     
     let gl_light_direction = gl.getUniformLocation(program, 'light_direction');
-    let light_direction = new Vector3([3.0,3.0,3.0])
+    let light_direction = new Vector3([1.0,1.0,1.0])
     light_direction.normalize();
     gl.uniform3fv(gl_light_direction, light_direction.elements)
 
@@ -34,7 +34,7 @@ function diffuseLightingInit(gl, program, triangle_list, boolEndCaps){
 
 
 
-function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShaderName, fragmentShaderName){
+function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShaderName, fragmentShaderName, second){
     //get 1d array of all coordinates
     //get the triangles
     //create new webgl function to draw from triangles
@@ -97,9 +97,10 @@ function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShade
 
     gl.clearColor(0, 0, 0, 1);
     gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.CULL_FACE);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    myRotateX(gl, program)
+    myRotateX(gl, program, second)
 
     diffuseLightingInit(gl, program, triangle_list, boolEndCaps)
 

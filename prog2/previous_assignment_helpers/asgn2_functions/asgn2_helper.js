@@ -140,9 +140,9 @@ function countTriangles(boolEndCaps, rotated_points){
     do{
       v1 = pOne % topEndCapCircleList.length
       v2 = pTwo % topEndCapCircleList.length
-      triangle_indices.push(poly_counter)
-      triangle_indices.push(topEndCapCircleList[v2])
       triangle_indices.push(topEndCapCircleList[v1])
+      triangle_indices.push(topEndCapCircleList[v2])
+      triangle_indices.push(poly_counter)
       pOne += 1
       pTwo += 1
     }while(v2 != 0);
@@ -173,14 +173,33 @@ function transformationListenerInit(){
 
 function SORWrapper(){
   generateSORNew("3dCanvas", 500, 500, "vertex-shader-2d-old", "fragment-shader-2d")
+
   // initTransformation()
   let renderOption = document.getElementById('renderOption').checked
+  let needed = initializeProgram("asgn2Canvas", 500, 500, "vertex-shader-2d", "fragment-shader-2d")
+  let gl = needed[0];
+  let program = needed[1];
   if(!renderOption){
-    generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d", "fragment-shader-2d")
+    generateSORNewTransformation(gl, program, false, false)
+    generateSORNewTransformation(gl, program, true, false)
+
   } else {
-    drawSORWithTriangles("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d-asgn2")
+    drawSORWithTriangles("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d-asgn2", false, true)
+    drawSORWithTriangles("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d-asgn2", true, false)
+
   }
 
 }
 
+function initializeProgram(canvasName, canvasWidth, canvasHeight, vertexShaderName, fragmentShaderName){
+  var canvas = document.getElementById(canvasName);//3dCanvas
+  var gl= canvas.getContext('webgl');
+  var vertexShaderSource = document.querySelector('#'+vertexShaderName).text;
+  var fragmentShaderSource = document.querySelector('#'+fragmentShaderName).text;
 
+  var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+  var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+  var program = createProgram(gl, vertexShader, fragmentShader);
+  gl.viewport(0, 0, canvasWidth, canvasHeight);//500, 500
+  return [gl, program]
+}
