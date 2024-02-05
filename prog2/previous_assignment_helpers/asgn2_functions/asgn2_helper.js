@@ -106,8 +106,8 @@ function countTriangles(boolEndCaps, rotated_points){
     const bottomEndCapHeight = findMinZ()[1]
     //iterate through rotated points to find which circle the endcap should be in 
     const endCapCircles  = findEndCapLevel(rotated_points, bottomEndCapHeight, topEndCapHeight)
-    const bottomEndCapCircleList = poly_points_list[endCapCircles[0]]
-    const topEndCapCircleList = poly_points_list[endCapCircles[1]]
+    const bottomEndCapCircleList = poly_points_list[endCapCircles[1]]
+    const topEndCapCircleList = poly_points_list[endCapCircles[0]]
 
     //calulate triangles for bottom end cap list by connecting endcap to all points within bottomEndCapCircleList,
     //do same for top end cap list
@@ -123,9 +123,9 @@ function countTriangles(boolEndCaps, rotated_points){
     do{
       v1 = pOne % bottomEndCapCircleList.length
       v2 = pTwo % bottomEndCapCircleList.length
-      triangle_indices.push(poly_counter)
+      triangle_indices.push(bottomEndCapCircleList[v1] )
       triangle_indices.push(bottomEndCapCircleList[v2])
-      triangle_indices.push(bottomEndCapCircleList[v1])
+      triangle_indices.push(poly_counter)
       pOne += 1
       pTwo += 1
     }while(v2 != 0);
@@ -140,9 +140,9 @@ function countTriangles(boolEndCaps, rotated_points){
     do{
       v1 = pOne % topEndCapCircleList.length
       v2 = pTwo % topEndCapCircleList.length
-      triangle_indices.push(poly_counter)
-      triangle_indices.push(topEndCapCircleList[v2])
       triangle_indices.push(topEndCapCircleList[v1])
+      triangle_indices.push(topEndCapCircleList[v2])
+      triangle_indices.push(poly_counter)
       pOne += 1
       pTwo += 1
     }while(v2 != 0);
@@ -172,11 +172,11 @@ function transformationListenerInit(){
 }
 
 function SORWrapper(){
-  generateSORNew("3dCanvas", 500, 500, "vertex-shader-2d", "fragment-shader-2d")
+  generateSORNew("3dCanvas", 500, 500, "vertex-shader-2d-old", "fragment-shader-2d")
   // initTransformation()
   let renderOption = document.getElementById('renderOption').checked
   if(!renderOption){
-    generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d-asgn2")
+    generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d", "fragment-shader-2d")
   } else {
     drawSORWithTriangles("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d-asgn2")
   }

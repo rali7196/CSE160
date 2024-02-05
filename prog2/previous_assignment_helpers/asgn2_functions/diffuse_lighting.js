@@ -1,6 +1,6 @@
 //rendering wireframe with triangles
 
-function diffuseLightingInit(gl, program){
+function diffuseLightingInit(gl, program, triangle_list, boolEndCaps){
     //get the rotation matrix, find inverse transpose of it, and then set the
     
     //calculate normals
@@ -56,6 +56,10 @@ function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShade
     }
 
 
+    //creating color array
+
+
+    
     let triangle_list = countTriangles(boolEndCaps, rotated_points)
 
     var canvas = document.getElementById(canvasName);//3dCanvas
@@ -69,12 +73,35 @@ function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShade
     gl.viewport(0, 0, canvasWidth, canvasHeight);//500, 500
   
     var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+
+
+    let colors = [];
+    for(let i = 0; i < positions_list.length; i++){
+        if(i%3 == 0){
+            colors.push(1.0)
+            colors.push(0.0)
+            colors.push(0.0)
+        }
+    }
+
+    //writing colors to vertex shader
+
+    let colors_buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, colors_buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+
+    let location = gl.getAttribLocation(program, 'a_color');
+    gl.vertexAttribPointer(location, 3, gl.FLOAT, false, 0,0);
+    gl.enableVertexAttribArray(location);
+
+
     gl.clearColor(0, 1, 0, 0.5);
-    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.enable(gl.DEPTH_TEST);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     myRotateX(gl, program)
 
-    diffuseLightingInit(gl, program)
+    diffuseLightingInit(gl, program, triangle_list, boolEndCaps)
 
     webGLDrawTrianglesFromIndices(gl, positions_list, triangle_list, program, positionAttributeLocation)
 
@@ -147,6 +174,7 @@ function calculateNormals(triangle_list, boolEndCaps){
         normals.push(normX)
         normals.push(normY)
         normals.push(normZ)
+        console.log('')
 
     }
     
