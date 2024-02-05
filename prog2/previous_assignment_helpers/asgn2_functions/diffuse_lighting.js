@@ -1,5 +1,12 @@
 //rendering wireframe with triangles
 
+function diffuseLightingInit(gl, program){
+    //get the rotation matrix, find inverse transpose of it, and then set the 
+
+}
+
+
+
 function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShaderName, fragmentShaderName){
     //get 1d array of all coordinates
     //get the triangles
@@ -12,8 +19,15 @@ function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShade
             positions_list.push(rotated_points[i][j])
         }
     }
-
     let boolEndCaps = document.getElementById('drawEndCaps').checked
+
+    if(boolEndCaps){
+        highest_point = (findMaxZ())[1]
+        positions_list.push(0,0,highest_point)
+        lowest_point = (findMinZ())[1]
+        positions_list.push(0,0,lowest_point)
+    }
+
 
     let triangle_list = countTriangles(boolEndCaps, rotated_points)
 
@@ -34,11 +48,14 @@ function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShade
     myRotateX(gl, program)
 
     webGLDrawTrianglesFromIndices(gl, positions_list, triangle_list, program, positionAttributeLocation)
-    let normals =calculateNormals(triangle_list)
+    let normals = calculateNormals(triangle_list, boolEndCaps)
+
     //start to draw triangles for this area
 }
 
-function calculateNormals(triangle_list){
+
+//return a 1d array that contains normals for all triangles
+function calculateNormals(triangle_list, boolEndCaps){
     let positions_list = []
     let rotated_points = generateSORPoints()
     for(let i = 0; i < rotated_points.length; i++){
@@ -46,6 +63,14 @@ function calculateNormals(triangle_list){
             positions_list.push(rotated_points[i][j])
         }
     }
+
+    if(boolEndCaps){
+        highest_point = (findMaxZ())[1]
+        positions_list.push(0,0,highest_point)
+        lowest_point = (findMinZ())[1]
+        positions_list.push(0,0,lowest_point)
+    }
+
 
     let indexed_positions = []
     for(let i = 0; i < positions_list.length; i++){
@@ -58,7 +83,7 @@ function calculateNormals(triangle_list){
 
     //iterating throuh triangle_list to calculate normals
     let normals = []
-    for(let i = 0; i < triangle_list-2; i++){
+    for(let i = 0; i+2 < triangle_list.length; i+=3){
         let tri_v1 = triangle_list[i]
         let tri_v2 = triangle_list[i+1]
         let tri_v3 = triangle_list[i+2]
@@ -94,6 +119,7 @@ function calculateNormals(triangle_list){
         normals.push(normX)
         normals.push(normY)
         normals.push(normZ)
+
     }
     
 

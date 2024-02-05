@@ -7,6 +7,7 @@ function createShader(gl, type, source) {
     return shader;
   }
 
+  // console.log('')
   console.log(gl.getShaderInfoLog(shader));
   gl.deleteShader(shader);
 }
@@ -15,6 +16,7 @@ function createProgram(gl, vertexShader, fragmentShader) {
   var program = gl.createProgram();
   gl.attachShader(program, vertexShader);
   gl.attachShader(program, fragmentShader);
+
   gl.linkProgram(program);
   gl.useProgram(program)
   gl.program = program

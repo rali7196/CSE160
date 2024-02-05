@@ -176,9 +176,9 @@ function SORWrapper(){
   // initTransformation()
   let renderOption = document.getElementById('renderOption').checked
   if(!renderOption){
-    generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
+    generateSORNewTransformation("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d-asgn2")
   } else {
-    drawSORWithTriangles("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d")
+    drawSORWithTriangles("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d-asgn2")
   }
 
 }
