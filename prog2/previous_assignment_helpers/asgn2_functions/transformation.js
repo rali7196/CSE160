@@ -15,7 +15,7 @@ function myRotateX(gl, program){
   transformation_matrix.rotate(angleY, 0,1,0)
   transformation_matrix.rotate(angleZ, 0,0,1)
 
-  transformation_matrix.translate(translationX,0,0)
+  transformation_matrix.translate(0,translationX,0)
 
   var positionAttributeLocationConst = gl.getUniformLocation(program, "transformation");
   gl.uniformMatrix4fv(positionAttributeLocationConst, false, transformation_matrix.elements);

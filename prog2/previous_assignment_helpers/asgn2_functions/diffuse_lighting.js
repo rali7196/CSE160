@@ -21,7 +21,7 @@ function diffuseLightingInit(gl, program, triangle_list, boolEndCaps){
     gl.uniform3f(gl_light_color, 1.0,1.0,1.0);
     
     let gl_light_direction = gl.getUniformLocation(program, 'light_direction');
-    let light_direction = new Vector3([1.0,1.0,1.0])
+    let light_direction = new Vector3([3.0,3.0,3.0])
     light_direction.normalize();
     gl.uniform3fv(gl_light_direction, light_direction.elements)
 
@@ -95,7 +95,7 @@ function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShade
     gl.enableVertexAttribArray(location);
 
 
-    gl.clearColor(0, 1, 0, 0.5);
+    gl.clearColor(0, 0, 0, 1);
     gl.enable(gl.DEPTH_TEST);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 

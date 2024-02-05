@@ -123,9 +123,9 @@ function countTriangles(boolEndCaps, rotated_points){
     do{
       v1 = pOne % bottomEndCapCircleList.length
       v2 = pTwo % bottomEndCapCircleList.length
-      triangle_indices.push(bottomEndCapCircleList[v1] )
-      triangle_indices.push(bottomEndCapCircleList[v2])
       triangle_indices.push(poly_counter)
+      triangle_indices.push(bottomEndCapCircleList[v2])
+      triangle_indices.push(bottomEndCapCircleList[v1] )
       pOne += 1
       pTwo += 1
     }while(v2 != 0);
@@ -140,9 +140,9 @@ function countTriangles(boolEndCaps, rotated_points){
     do{
       v1 = pOne % topEndCapCircleList.length
       v2 = pTwo % topEndCapCircleList.length
-      triangle_indices.push(topEndCapCircleList[v1])
-      triangle_indices.push(topEndCapCircleList[v2])
       triangle_indices.push(poly_counter)
+      triangle_indices.push(topEndCapCircleList[v2])
+      triangle_indices.push(topEndCapCircleList[v1])
       pOne += 1
       pTwo += 1
     }while(v2 != 0);
