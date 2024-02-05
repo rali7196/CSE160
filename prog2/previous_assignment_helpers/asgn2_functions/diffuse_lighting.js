@@ -34,7 +34,7 @@ function diffuseLightingInit(gl, program, triangle_list, boolEndCaps){
 
 
 
-function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShaderName, fragmentShaderName, second){
+function drawSORWithTriangles(gl, program, second){
     //get 1d array of all coordinates
     //get the triangles
     //create new webgl function to draw from triangles
@@ -62,15 +62,15 @@ function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShade
     
     let triangle_list = countTriangles(boolEndCaps, rotated_points)
 
-    var canvas = document.getElementById(canvasName);//3dCanvas
-    var gl= canvas.getContext('webgl');
-    var vertexShaderSource = document.querySelector('#'+vertexShaderName).text;
-    var fragmentShaderSource = document.querySelector('#'+fragmentShaderName).text;
+    // var canvas = document.getElementById(canvasName);//3dCanvas
+    // var gl= canvas.getContext('webgl');
+    // var vertexShaderSource = document.querySelector('#'+vertexShaderName).text;
+    // var fragmentShaderSource = document.querySelector('#'+fragmentShaderName).text;
   
-    var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-    var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-    var program = createProgram(gl, vertexShader, fragmentShader);
-    gl.viewport(0, 0, canvasWidth, canvasHeight);//500, 500
+    // var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+    // var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+    // var program = createProgram(gl, vertexShader, fragmentShader);
+    // gl.viewport(0, 0, canvasWidth, canvasHeight);//500, 500
   
     var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
 
@@ -104,7 +104,7 @@ function drawSORWithTriangles(canvasName, canvasWidth, canvasHeight, vertexShade
 
     diffuseLightingInit(gl, program, triangle_list, boolEndCaps)
 
-    webGLDrawTrianglesFromIndices(gl, positions_list, triangle_list, program, positionAttributeLocation)
+    webGLDrawTrianglesFromIndices(gl, positions_list, triangle_list, program, positionAttributeLocation, gl.TRIANGLES)
 
     //start to draw triangles for this area
 }

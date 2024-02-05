@@ -16,9 +16,9 @@ function myRotateX(gl, program, second){
   transformation_matrix.rotate(angleZ, 0,0,1)
 
   if(second){
-    transformation_matrix.translate(translationX+0.4,0,0)
+    transformation_matrix.translate(translationX+0.8,0,0)
   } else {
-    transformation_matrix.translate(translationX-0.4,0,0)
+    transformation_matrix.translate(translationX-0.8,0,0)
   }
 
   var positionAttributeLocationConst = gl.getUniformLocation(program, "transformation");
@@ -40,7 +40,7 @@ function myRotateX(gl, program, second){
 
 
 
-function generateSORNewTransformation(gl, program, second, boolClear){
+function generateSORNewTransformation(gl, program, second){
 
   //need to translate rotated points by multiplying composite matrix by each point
   let rotated_points = generateSORPoints()
@@ -57,10 +57,6 @@ function generateSORNewTransformation(gl, program, second, boolClear){
   // gl.viewport(0, 0, canvasWidth, canvasHeight);//500, 500
 
   var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
-  if(boolClear){
-    gl.clearColor(0, 0, 0, 1);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-  }
 
   // let transformation_matrix = new Matrix4()
   // transformation_matrix.setRotate(70,0,1, 0)

@@ -75,7 +75,7 @@ function getWebGLProgram(){
 
 
 function webGLDrawTrianglesFromIndices(gl, positions, triangleIndices, program, 
-  positionAttributeLocation){
+  positionAttributeLocation, primitiveType){
 
     //writing to array_buffer
     var positionBuffer = gl.createBuffer();
@@ -106,6 +106,6 @@ function webGLDrawTrianglesFromIndices(gl, positions, triangleIndices, program,
     // var count = (rotated_points[i].length)/3
     // console.log('curr points: ' + rotated_points[i])
     // gl.drawArrays(primitiveType, offset, count);
-    gl.drawElements(gl.TRIANGLES, triangleIndices.length, gl.UNSIGNED_SHORT, offset)
+    gl.drawElements(primitiveType, triangleIndices.length, gl.UNSIGNED_SHORT, offset)
 
 }

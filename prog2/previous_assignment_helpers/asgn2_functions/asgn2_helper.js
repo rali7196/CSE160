@@ -174,32 +174,53 @@ function transformationListenerInit(){
 function SORWrapper(){
   generateSORNew("3dCanvas", 500, 500, "vertex-shader-2d-old", "fragment-shader-2d")
 
-  // initTransformation()
+  var canvas = document.getElementById('asgn2Canvas');//3dCanvas
+  var gl= canvas.getContext('webgl');
+
   let renderOption = document.getElementById('renderOption').checked
-  let needed = initializeProgram("asgn2Canvas", 500, 500, "vertex-shader-2d", "fragment-shader-2d")
-  let gl = needed[0];
-  let program = needed[1];
+  let needed = initializeProgram(gl, "vertex-shader-2d", "fragment-shader-2d")
+  // let gl = needed[0];
+  // let program = needed[1];
+  let program = needed
+
+
+
+  // let neededDiffuse = initializeProgram(gl, 'vertex-shader-2d-asgn2', 'fragment-shader-2d-asgn2');
+  // let gl2 = neededDiffuse[0]
+  // let program2 = neededDiffuse[1]
+  // let program2 = neededDiffuse;
+
+  gl.clearColor(0, 0, 0, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.viewport(0, 0, 500, 500);//500, 500
+
+  // gl2.clearColor(0, 0, 0, 1);
+  // gl2.clear(gl.COLOR_BUFFER_BIT);
+
   if(!renderOption){
-    generateSORNewTransformation(gl, program, false, false)
-    generateSORNewTransformation(gl, program, true, false)
+    generateSORNewTransformation(gl, program, false)
+    generateSORNewTransformation(gl, program, true)
+
 
   } else {
-    drawSORWithTriangles("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d-asgn2", false, true)
-    drawSORWithTriangles("asgn2Canvas", 500, 500, "vertex-shader-2d-asgn2", "fragment-shader-2d-asgn2", true, false)
+
+    let program2 = initializeProgram(gl, 'vertex-shader-2d-asgn2', 'fragment-shader-2d-asgn2');
+    drawSORWithTriangles(gl, program2, false)
+    drawSORWithTriangles(gl, program2, true)
 
   }
 
 }
 
-function initializeProgram(canvasName, canvasWidth, canvasHeight, vertexShaderName, fragmentShaderName){
-  var canvas = document.getElementById(canvasName);//3dCanvas
-  var gl= canvas.getContext('webgl');
+function initializeProgram(gl,  vertexShaderName, fragmentShaderName){
+  // var canvas = document.getElementById(canvasName);//3dCanvas
+  // var gl= canvas.getContext('webgl');
   var vertexShaderSource = document.querySelector('#'+vertexShaderName).text;
   var fragmentShaderSource = document.querySelector('#'+fragmentShaderName).text;
 
   var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
   var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
   var program = createProgram(gl, vertexShader, fragmentShader);
-  gl.viewport(0, 0, canvasWidth, canvasHeight);//500, 500
-  return [gl, program]
+  // return [gl, program]
+  return program
 }
