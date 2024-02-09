@@ -109,3 +109,16 @@ function webGLDrawTrianglesFromIndices(gl, positions, triangleIndices, program,
     gl.drawElements(primitiveType, triangleIndices.length, gl.UNSIGNED_SHORT, offset)
 
 }
+
+function initializeProgram(gl,  vertexShaderName, fragmentShaderName){
+  // var canvas = document.getElementById(canvasName);//3dCanvas
+  // var gl= canvas.getContext('webgl');
+  var vertexShaderSource = document.querySelector('#'+vertexShaderName).text;
+  var fragmentShaderSource = document.querySelector('#'+fragmentShaderName).text;
+
+  var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+  var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+  var program = createProgram(gl, vertexShader, fragmentShader);
+  // return [gl, program]
+  return program
+}
