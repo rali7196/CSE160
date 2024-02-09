@@ -25,11 +25,6 @@ function diffuseLightingInit(gl, program, triangle_list, boolEndCaps){
     light_direction.normalize();
     gl.uniform3fv(gl_light_direction, light_direction.elements)
 
-
-
-
-    
-
 }
 
 
@@ -62,16 +57,6 @@ function drawSORWithTriangles(gl, program, second, surfaceColor, primitiveType){
 
     
     let triangle_list = countTriangles(boolEndCaps, rotated_points)
-
-    // var canvas = document.getElementById(canvasName);//3dCanvas
-    // var gl= canvas.getContext('webgl');
-    // var vertexShaderSource = document.querySelector('#'+vertexShaderName).text;
-    // var fragmentShaderSource = document.querySelector('#'+fragmentShaderName).text;
-  
-    // var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-    // var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-    // var program = createProgram(gl, vertexShader, fragmentShader);
-    // gl.viewport(0, 0, canvasWidth, canvasHeight);//500, 500
   
     var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
 
@@ -179,9 +164,5 @@ function calculateNormals(triangle_list, boolEndCaps){
         console.log('')
 
     }
-    
-
-
     return normals
-
 }

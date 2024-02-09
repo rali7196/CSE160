@@ -12,9 +12,9 @@
       Also, refresh the page everytime you want to draw a new shape
     </h2>
 
-    <h2>Please scroll down to see the output of assignment 2</h2>
     <a href = "features.html">Go Back to Features</a><p></p>
-    <input type="number" id="n" min = 1 ></input>
+    <h3>Number of Sides</h3>
+    <input type="number" id="n" min = 1 value="3"></input>
 
     <!-- <canvas id="myCanvas" width="400" height="200"></canvas> -->
     <!-- <button onclick="getN()">Save Value of N</button> -->
@@ -23,16 +23,16 @@
     <input type="checkbox" id = "downloadFiles" min = 0 max = 1 value = 0>Check if you want to download .coor and .poly</input>
 
     <!-- <button onclick="getDrawEndCaps()">Save option to draw end caps(0 for false, 1 for true)</button> -->
-    <p></p>
-    <button onclick="SORWrapper()">Generate SOR</button>
+    <h3>Shading Type</h3>
+
+    <select id = "shadingType">
+      <option value = 'wireframe'>Wireframe</option>
+      <option value = 'flatShading'>Flat Shading</option>
+      <option value = 'smoothShading'>Smooth Shading</option>
+    </select>
 
     <P></P>
     
-    <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
-
-    <canvas id="3dCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
-
-    <h2>This is the output of assignment 2</h2>
     <p style="display: inline-block;">X Rotation Slider</p>
 
     <input type="range" id="rotationSliderX" min="0" max="360" >
@@ -43,16 +43,20 @@
     <p style="display: inline-block;">Z Rotation Slider</p>
     <input type="range" id="rotationSliderZ" min="0" max="360">
     
-    <p style="">X Translation Slider</p>
+    <p>X Translation Slider</p>
     <input type="range" id="translationSliderX" min="-100" max="100">
     <p></p>
 
     
-    <input type="checkbox" id = "renderOption" min = 0 max = 1 value = 0 style="display: inline-block;">
-    Check if you want diffuse lighting, uncheck if you want wireframe
-    </input>
+
+
 
     <p></p>
+    
+    <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+
+    <!-- <canvas id="3dCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas> -->
+
 
 
 <!-- Script imports -->
@@ -68,10 +72,11 @@
     <script src="previous_assignment_helpers/asgn2_functions/asgn2_helper.js"></script>
     <script src="previous_assignment_helpers/asgn2_functions/transformation.js"></script>
     <script src="previous_assignment_helpers/asgn2_functions/diffuse_lighting.js"></script>
+    
 
 
 
-
+    <script src="shaders.js"></script>
     <script src="webgl_utils.js"></script>
     <script src="driver.js"></script>
 

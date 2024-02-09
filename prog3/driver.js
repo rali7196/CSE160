@@ -18,35 +18,32 @@ function main(){
 
 
 function SORWrapper(){
-  generateSORNew("3dCanvas", 500, 500, "vertex-shader-2d-old", "fragment-shader-2d")
+  // generateSORNew("3dCanvas", 500, 500, "vertex-shader-2d-old", "fragment-shader-2d")
 
   var canvas = document.getElementById('asgn2Canvas');//3dCanvas
   var gl= canvas.getContext('webgl');
 
-  let renderOption = document.getElementById('renderOption').checked
-  let program = initializeProgram(gl, "vertex-shader-2d-2", "fragment-shader-2d-2")
+
+  let program = initializeProgram(gl, vertexShader2d, fragmentShader2d)
 
   gl.clearColor(0, 0, 0, 1);
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.viewport(0, 0, 500, 500);//500, 500
 
+  let dropDownMenu= document.getElementById('shadingType')
+  let shadingType = dropDownMenu.options[dropDownMenu.selectedIndex].value
 
-  if(!renderOption){
+
+  if(shadingType=='wireframe'){
     generateSORNewTransformation(gl, program, false)
     generateSORNewTransformation(gl, program, true)
-
-
-
-  } else {
-
-    let program2 = initializeProgram(gl, 'vertex-shader-2d-asgn2', 'fragment-shader-2d-asgn2');
+  } else if(shadingType=='flatShading'){
+    let program2 = initializeProgram(gl, vertexShaderAsgn2, fragmentShaderAsgn2);
     gl.clear(gl.COLOR_BUFFER_BIT)
     
     drawSORWithTriangles(gl, program2, false, [1.0,0.0,0.0], gl.TRIANGLES)
     drawSORWithTriangles(gl, program2, true, [0.0,1.0,0.0], gl.TRIANGLES)
-
   }
-
 }
 
 

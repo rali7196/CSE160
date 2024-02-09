@@ -154,9 +154,18 @@ function transformationListenerInit(){
   rangeInput.addEventListener('input', ()=>{ 
     SORWrapper()  })
 
-  rangeInput = document.getElementById("renderOption")
-  rangeInput.addEventListener('input', ()=>{ 
-    SORWrapper()  })
+  rangeInput = document.getElementById('shadingType')
+  rangeInput.addEventListener('change', ()=>{
+    SORWrapper()
+  })
+
+  rangeInput = document.getElementById('n')
+  rangeInput.addEventListener('input', ()=>{
+    if(vertices.length > 6){
+      SORWrapper()
+    }
+  })
+
 }
 
 

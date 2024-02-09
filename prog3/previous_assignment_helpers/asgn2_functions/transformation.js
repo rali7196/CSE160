@@ -64,7 +64,8 @@ function generateSORNewTransformation(gl, program, second){
   // var positionAttributeLocationConst = gl.getUniformLocation(program, "transformation");
   // gl.uniformMatrix4fv(positionAttributeLocationConst, false, transformation_matrix.elements);
 
-  myRotateX(gl, program, second)
+
+    myRotateX(gl, program, second)
 
 
 

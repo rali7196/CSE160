@@ -10,6 +10,9 @@ function initializeAsgn0Canvas(canvas, context){
     //add event listeners
     canvas.addEventListener('mousedown', (e) => {
         drawPoint(e,canvas, context)
+        if(vertices.length >= 6){
+            SORWrapper()
+        }
     })
     context.beginPath();
 

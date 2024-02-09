@@ -89,7 +89,6 @@ function webGLDrawTrianglesFromIndices(gl, positions, triangleIndices, program,
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, elementBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(triangleIndices), gl.STATIC_DRAW);
 
-    gl.useProgram(program);
     gl.enableVertexAttribArray(positionAttributeLocation);
     var size = 3;         
     var type = gl.FLOAT;   
@@ -113,8 +112,11 @@ function webGLDrawTrianglesFromIndices(gl, positions, triangleIndices, program,
 function initializeProgram(gl,  vertexShaderName, fragmentShaderName){
   // var canvas = document.getElementById(canvasName);//3dCanvas
   // var gl= canvas.getContext('webgl');
-  var vertexShaderSource = document.querySelector('#'+vertexShaderName).text;
-  var fragmentShaderSource = document.querySelector('#'+fragmentShaderName).text;
+  // var vertexShaderSource = document.querySelector('#'+vertexShaderName).text;
+  // var fragmentShaderSource = document.querySelector('#'+fragmentShaderName).text;
+
+  var vertexShaderSource = vertexShaderName
+  var fragmentShaderSource = fragmentShaderName
 
   var vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
   var fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
