@@ -1,4 +1,18 @@
 
+//  TODO: Figure out how to find the color on a surface being affected by two light sources
+//Possibly taking the average of the two light sources? Ask at discussion section today
+//adding the light color calculated from equation
+
+//TODO: Ask about using multiple kinds of shading
+//should be able to switch between them one at a time
+
+//  TODO: Figure out how to do ambient lighting(should be easy)
+//
+//  TODO: Figure out how to do specular lighting(check notes for how to calculate view vector & reflection vector,)
+//The view vector should be constant, only need to calculate the reflection vector
+
+//  TODO: Figure out how to calculate the vertex normals for gourand shading
+
 
 
 
