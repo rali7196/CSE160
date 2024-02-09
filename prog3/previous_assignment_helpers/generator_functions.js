@@ -80,7 +80,6 @@ function calculateNormals(triangle_list, boolEndCaps){
         normals.push(normX)
         normals.push(normY)
         normals.push(normZ)
-        console.log('')
 
     }
     return normals
