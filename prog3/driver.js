@@ -1,8 +1,3 @@
-class SOR {
-  //couple of attributes: points_list, vertices, rotated_points
-  //create skeleton methods that call other functions
-}
-
 var vertices = []
 
 function main(){
@@ -39,7 +34,11 @@ function SORWrapper(){
     generateSORNewTransformation(gl, program, true)
   } else if(shadingType=='flatShading'){
     let program2 = initializeProgram(gl, vertexShaderAsgn2, fragmentShaderAsgn2);
-    gl.clear(gl.COLOR_BUFFER_BIT)
+    gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.CULL_FACE);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+
+    // gl.clear(gl.DEPTH_BUFFER_BIT);
     
     drawSORWithTriangles(gl, program2, false, [1.0,0.0,0.0], gl.TRIANGLES)
     drawSORWithTriangles(gl, program2, true, [0.0,1.0,0.0], gl.TRIANGLES)

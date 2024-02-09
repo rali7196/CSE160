@@ -18,22 +18,7 @@ function findEndCapLevel(rotated_points, minZ, maxZ){
 //returns a 1d array of all triangle locations
 function countTriangles(boolEndCaps, rotated_points){
     //1d array that contains all x,y, and z coordinates [x1,y1,z1,x2,y2,z2 ...]
-    point_list = []
-    let coor_counter = 0
-    
-
-    for(let i = 0; i < rotated_points.length; i++){
-      for(let j = 0; j < rotated_points[i].length; j++){
-        point_list.push(rotated_points[i][j])
-      }
-    }
-
-    if(boolEndCaps){
-        highest_point = (findMaxZ())[1]
-        point_list.push(0,0,highest_point)
-        lowest_point = (findMinZ())[1]
-        point_list.push(0,0,lowest_point)
-    }
+    // let point_list = getPointsList(boolEndCaps, rotated_points)
 
 
     //2d array that contains the indices of each vertex from rotated_points

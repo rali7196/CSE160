@@ -89,7 +89,7 @@ function downloadCoor(stringData, fileName){
 
 
 function generateFiles(boolEndCaps, rotated_points){
-  point_list = []
+  let point_list = []
   let coor_counter = 0
   
   if(boolEndCaps){

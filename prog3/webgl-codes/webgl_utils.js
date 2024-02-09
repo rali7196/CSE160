@@ -124,3 +124,13 @@ function initializeProgram(gl,  vertexShaderName, fragmentShaderName){
   // return [gl, program]
   return program
 }
+
+function writeToBuffer(gl, program, webGLVarName, JSVar){
+  let colors_buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, colors_buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(JSVar), gl.STATIC_DRAW);
+
+  let location = gl.getAttribLocation(program, webGLVarName);
+  gl.vertexAttribPointer(location, 3, gl.FLOAT, false, 0,0);
+  gl.enableVertexAttribArray(location);
+}

@@ -109,7 +109,7 @@ function generateSOR(){
   //generating the files
 
   //generating the .coor file
-  point_list = []
+  let point_list = []
   let coor_counter = 0
   
   if(boolEndCaps){
