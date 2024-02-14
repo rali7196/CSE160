@@ -84,3 +84,99 @@ function calculateNormals(triangle_list, boolEndCaps){
     }
     return normals
 }
+
+//returns a 1d array that contains the vertex normals. 
+function calculateVertexNormals(triangle_list, normals, boolEndCaps){
+    //TODO: need to find a way that, for each vertex, calculate a normal
+    //TODO: This is done by finding the vertices of each polygon, and then, using the normal
+    //each polygon, find the average of the normals for each vertex
+    //triangle list contains the vertices of each polygon, normals contains the normals of each polygon
+
+    //create a 2d array, where each subarray contains all of the normals for vertex i
+    //to identify which normals belong to which vertices, I need to take the three points, and assign them to 
+    //i, i+1, i+2 in triangle indices
+
+    //ask about world matrix in point lighting
+    //just the 
+    
+    //ask about gourand shading vertex calculation algorihtm
+    //works
+    //ask about number 3 in the midterm
+    //was a unit cube, finding normals should be trivial
+
+    //ask about the light color in number 2
+    //its the same light color for all kinds of lighting
+
+    //ask about halfway vector
+    //just (A+B)/2, normalized for light calculations
+
+    //ask about specular lighting calculation
+    //this is just a color calculated, just like diffuse lighting. 
+    //make sure to use different surface values for specular and ambient lighting calculations
+
+    //for ambient lighting, use a darker surface color
+
+    //find the number of vertices in the array
+    let point_list = getPointsList(boolEndCaps, generateSORPoints())
+    let vertex_normals = []
+    for(let i = 0; i < point_list.length/3; i++){
+        vertex_normals.push([])
+    }
+
+
+    //pushing relevant normals into arrays, sorting them by which vertex they belong to.
+    for(let i = 0; i < normals.length-2; i++){
+        let x = normals[i]
+        let y = normals[i+1]
+        let z = normals[i+2]
+
+        //access triangle indices in triangle_list
+        let vertex_one = triangle_list[i]
+        let vertex_two = triangle_list[i+1]
+        let vertex_three = triangle_list[i+2]
+
+        vertex_normals[vertex_one].push(x)
+        vertex_normals[vertex_one].push(y)
+        vertex_normals[vertex_one].push(z)
+
+        vertex_normals[vertex_two].push(x)
+        vertex_normals[vertex_two].push(y)
+        vertex_normals[vertex_two].push(z)
+
+        vertex_normals[vertex_three].push(x)
+        vertex_normals[vertex_three].push(y)
+        vertex_normals[vertex_three].push(z)
+    }
+
+    //now, i need to find the vertex normal of every point. 
+    //iterate through every array in vertex_normals
+    //for every element in vertex_normals[i], add every 1st element, 2nd element, and 3rd element to three sums
+    //then, take those three summed coordinates, find the magnitude, and then divide each one by calculated magnitude
+
+    let calculated_vertex_normals = []
+    //iterating through each collection of normals
+    for(let i = 0; i < vertex_normals.length; i++){
+        //iterating throuh the collection of normals
+        let sumX = 0
+        let sumY = 0
+        let sumZ = 0
+        for(let j = 0; j < vertex_normals[i].length-2; j++){
+            let current_normalX = vertex_normals[i][j]
+            let current_normalY = vertex_normals[i][j+1]
+            let current_normalZ = vertex_normals[i][j+2]
+
+            sumX += current_normalX
+            sumY += current_normalY
+            sumZ += current_normalZ
+        }
+
+        let magnitude = Math.sqrt((sumX**2) + (sumY**2) + (sumZ**2))
+        sumX = sumX / magnitude
+        sumY = sumY / magnitude
+        sumZ = sumZ / magnitude
+
+        calculated_vertex_normals.push(sumX)
+        calculated_vertex_normals.push(sumY)
+        calculated_vertex_normals.push(sumZ)       
+    }
+}
