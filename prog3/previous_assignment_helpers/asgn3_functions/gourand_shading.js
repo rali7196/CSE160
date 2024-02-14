@@ -15,9 +15,9 @@ function gourandShadingInit(gl, program, triangle_list, boolEndCaps){
 }
 
 
-function gourandShading(gl, program, triangle_list, boolEndCaps){
+function gourandShading(gl, program, second, surfaceColor, primitiveType){
 
-    let positions_list = getPointsList();
+    let positions_list = getPointsList(true, generateSORPoints());
     let triangle_list = countTriangles(boolEndCaps, generateSORPoints())
     
     var positionAttributeLocation = gl.getAttribLocation(program, 'a_position')
@@ -35,7 +35,7 @@ function gourandShading(gl, program, triangle_list, boolEndCaps){
 
     myRotateX(gl, program, second)
 
-    diffuseLightingInit(gl, program, triangle_list, boolEndCaps)
+    gourandShadingInit(gl, program, triangle_list, boolEndCaps)
 
     webGLDrawTrianglesFromIndices(gl, positions_list, triangle_list, program, positionAttributeLocation, primitiveType)
 

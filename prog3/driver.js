@@ -61,6 +61,16 @@ function SORWrapper(){
     
     drawSORWithTriangles(gl, program2, false, [1.0,0.0,0.0], gl.TRIANGLES)
     drawSORWithTriangles(gl, program2, true, [0.0,1.0,0.0], gl.TRIANGLES)
+  } else if(shadingType='gourandShading'){
+    let program2 = initializeProgram(gl, vertexShaderAsgn2, fragmentShaderAsgn2);
+    gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.CULL_FACE);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+
+    // gl.clear(gl.DEPTH_BUFFER_BIT);
+    
+    gourandShading(gl, program2, false, [1.0,0.0,0.0], gl.TRIANGLES)
+    gourandShading(gl, program2, true, [0.0,1.0,0.0], gl.TRIANGLES)
   }
 }
 

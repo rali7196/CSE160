@@ -170,13 +170,14 @@ function calculateVertexNormals(triangle_list, normals, boolEndCaps){
             sumZ += current_normalZ
         }
 
-        let magnitude = Math.sqrt((sumX**2) + (sumY**2) + (sumZ**2))
-        sumX = sumX / magnitude
-        sumY = sumY / magnitude
-        sumZ = sumZ / magnitude
+        // let magnitude = Math.sqrt((sumX**2) + (sumY**2) + (sumZ**2))
+        // sumX = sumX / magnitude
+        // sumY = sumY / magnitude
+        // sumZ = sumZ / magnitude
 
         calculated_vertex_normals.push(sumX)
         calculated_vertex_normals.push(sumY)
         calculated_vertex_normals.push(sumZ)       
     }
+    return calculated_vertex_normals
 }
