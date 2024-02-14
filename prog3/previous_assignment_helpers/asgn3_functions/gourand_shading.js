@@ -1,4 +1,4 @@
-function gourandShadingInit(gl, program, triangle_list, boolEndCaps){
+function gourandShadingInit(gl, program, triangle_list, boolEndCaps, surfaceColor){
     let normals = calculateNormals(triangle_list, boolEndCaps);
 
     let vertex_normals = calculateVertexNormals(triangle_list, normals, boolEndCaps);
@@ -10,6 +10,11 @@ function gourandShadingInit(gl, program, triangle_list, boolEndCaps){
     let gl_light_direction = gl.getUniformLocation(program, 'light_direction');
     let light_direction = new Vector3([1.0,1.0,1.0])
     light_direction.normalize();
+
+    let gl_ambient_color = gl.getUniformLocation(program, 'ambient_color')
+    gl.uniform3f(gl_ambient_color, surfaceColor[0]/10,surfaceColor[1]/10,surfaceColor[2]/10)
+
+
     gl.uniform3fv(gl_light_direction, light_direction.elements)
 
 }
@@ -35,7 +40,7 @@ function gourandShading(gl, program, second, surfaceColor, primitiveType){
 
     myRotateX(gl, program, second)
 
-    gourandShadingInit(gl, program, triangle_list, boolEndCaps)
+    gourandShadingInit(gl, program, triangle_list, boolEndCaps, surfaceColor)
 
     webGLDrawTrianglesFromIndices(gl, positions_list, triangle_list, program, positionAttributeLocation, primitiveType)
 

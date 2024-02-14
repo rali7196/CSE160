@@ -36,7 +36,7 @@ function drawSORWithTriangles(gl, program, second, surfaceColor, primitiveType){
 
     
     let triangle_list = countTriangles(boolEndCaps, rotated_points)
-  
+    
     var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
 
 

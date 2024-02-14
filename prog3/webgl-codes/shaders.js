@@ -29,6 +29,8 @@ attribute vec4 a_color;
 uniform vec3 light_color;
 uniform vec3 light_direction;
 
+uniform vec3 ambient_color;
+
 uniform mat4 transformation;
 uniform mat4 normal_transformation;
 
@@ -44,7 +46,10 @@ void main() {
   vec3 diffuse = light_color * a_color.rgb * nDotL;
 
   //v_Color = a_color;
-  v_Color = vec4(diffuse, a_color.a);
+
+  vec3 ambient_light = ambient_color * a_color.rgb;
+
+  v_Color = vec4(diffuse + ambient_light, a_color.a);
   //v_Color = vec4(diffuse, gl_Position.a);
 }
 `
