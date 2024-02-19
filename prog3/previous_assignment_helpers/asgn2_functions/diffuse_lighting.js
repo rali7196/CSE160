@@ -14,11 +14,21 @@ function diffuseLightingInit(gl, program, triangle_list, boolEndCaps, surfaceCol
     let gl_light_color = gl.getUniformLocation(program, 'light_color');
 
     gl.uniform3f(gl_light_color, 1.0,1.0,1.0);
+
+    let gl_light_color_specular = gl.getUniformLocation(program, 'u_Light_Color');
+    gl.uniform3f(gl_light_color_specular, 1.0,1.0,1.0);
+
+
     
     let gl_light_direction = gl.getUniformLocation(program, 'light_direction');
     let light_direction = new Vector3([1.0,1.0,1.0])
     light_direction.normalize();
     gl.uniform3fv(gl_light_direction, light_direction.elements)
+
+    let gl_light_direction_specular = gl.getUniformLocation(program, 'u_Light_Position');
+    gl.uniform3fv(gl_light_direction_specular, light_direction.elements)
+
+
 
     let gl_ambient_color = gl.getUniformLocation(program, 'ambient_color')
     gl.uniform3f(gl_ambient_color, surfaceColor[0]/10,surfaceColor[1]/10,surfaceColor[2]/10)
