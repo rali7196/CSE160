@@ -23,6 +23,9 @@ function diffuseLightingInit(gl, program, triangle_list, boolEndCaps, surfaceCol
     let gl_ambient_color = gl.getUniformLocation(program, 'ambient_color')
     gl.uniform3f(gl_ambient_color, surfaceColor[0]/10,surfaceColor[1]/10,surfaceColor[2]/10)
 
+    //need to find the reflection vector, view vector is just going to be 1,1,1
+
+
 }
 
 

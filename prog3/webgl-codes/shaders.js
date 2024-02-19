@@ -36,6 +36,12 @@ uniform mat4 normal_transformation;
 
 varying vec4 v_Color;
 
+
+varying vec3 diffuse;
+varying vec3 ambient_light;
+varying vec4 a_color_fragment;
+
+
 void main() {
 
   gl_Position = transformation * a_position;
@@ -43,14 +49,13 @@ void main() {
 
   vec3 normal = normalize(vec3(normal_transformation * a_normal));
   float nDotL = max(dot(light_direction, normal), 0.0);
-  vec3 diffuse = light_color * a_color.rgb * nDotL;
+  diffuse = light_color * a_color.rgb * nDotL;
 
-  //v_Color = a_color;
 
-  vec3 ambient_light = ambient_color * a_color.rgb;
+  ambient_light = ambient_color * a_color.rgb;
+  a_color_fragment = a_color;
 
-  v_Color = vec4(diffuse + ambient_light, a_color.a);
-  //v_Color = vec4(diffuse, gl_Position.a);
+  //v_Color = vec4(diffuse + ambient_light, a_color.a);
 }
 `
 
@@ -58,9 +63,14 @@ let fragmentShaderAsgn2 = `
 precision mediump float;
       
 varying vec4 v_Color;
+varying vec3 diffuse;
+varying vec3 ambient_light;
+varying vec4 a_color_fragment;
 
 
 void main() {
-  gl_FragColor = v_Color;
+
+  gl_FragColor = vec4(diffuse + ambient_light, a_color_fragment.a);
+  //gl_FragColor = v_Color;
 }
 `
