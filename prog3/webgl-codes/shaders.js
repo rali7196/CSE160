@@ -89,11 +89,17 @@ varying vec3 v_Normal;
 void main() {
 
   vec3 to_light_directional = normalize(u_Light_Position - v_Vertex.xyz);
+  vec3 reflection = normalize(2.0 * dot(v_Normal, to_light_directional) * v_Normal - to_light_directional);
+  vec3 to_camera = normalize(-1.0 * v_Vertex.xyz);
+  float cos_angle_directional = dot(reflection, to_camera);
+  cos_angle_directional = clamp(cos_angle_directional, 0.0, 1.0);
+  cos_angle_directional = pow(cos_angle_directional, 1.0);
+  vec3 specular_color_directional = u_Light_Color * a_color_fragment.rgb * cos_angle_directional;
 
-  
 
 
-  gl_FragColor = vec4(diffuse + ambient_light, a_color_fragment.a);
+
+  gl_FragColor = vec4(diffuse + ambient_light + specular_color_directional, a_color_fragment.a);
   //gl_FragColor = v_Color;
 }
 `

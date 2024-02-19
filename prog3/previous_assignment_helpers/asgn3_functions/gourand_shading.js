@@ -14,6 +14,12 @@ function gourandShadingInit(gl, program, triangle_list, boolEndCaps, surfaceColo
     let gl_ambient_color = gl.getUniformLocation(program, 'ambient_color')
     gl.uniform3f(gl_ambient_color, surfaceColor[0]/10,surfaceColor[1]/10,surfaceColor[2]/10)
 
+    let gl_light_color_specular = gl.getUniformLocation(program, 'u_Light_Color');
+    gl.uniform3f(gl_light_color_specular, 1.0,1.0,1.0);
+
+    let gl_light_direction_specular = gl.getUniformLocation(program, 'u_Light_Position');
+    gl.uniform3fv(gl_light_direction_specular, light_direction.elements)
+
 
     gl.uniform3fv(gl_light_direction, light_direction.elements)
 
