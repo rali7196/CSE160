@@ -7,34 +7,27 @@
 </head>
 <body>
 
-    <h1>Programming Assignment 2 Features</h1>
+    <h1>Programming Assignment 3 Features</h1>
     <p>Name: Rehan Ali</p>
     <p>ID: rali3</p>
     <p>Date: Febuary 5th, 2024</p>
     <a href = "driver.html">Driver Code</a>
     <h2>Overview of Features</h2>
-    <p>This assignment contains three canvases: The one with the green and red line is the initial canvas you draw on.
-        After clicking generate SOR, the canvas on the right will show the original SOR. Then,<b> you need to scroll down to
-        the canvas on the bottom, which shows the output of assignment two</b>. You can use the sliders to apply transformations
-        to both shapes in the scene. Additionally, you can click the checkbox in order to switch between wireframe rendering
-        and flat shading. I recommend you enable the endcaps for a better viewing experience when using the flat shading. 
+    <p>
+        This assignment contains 2 canvases: you draw on the left one and the output shows on the right one.
+        You can use the drop down menu to select which kind of shading option you would like to use. Additionally,
+        You can use the check boxes to check which kinds of lighting you would like to use, those being the directional
+        light source and the point light source. 
     </p>
     <p>
-        This assignment involved taking the output from the previous assignment, a .poly file and a .coor file, and 
-        doing two things to it: applying directional lighting and transformations to it. To do this, I first
-        calculated all of the normals from the triangles. I did this by taking the first vertex, and calculating two 
-        vectors from the triangle. Then, I was able to use the cross product to calculate each normal of each triangle, 
-        which was then used to calculate the light of the surface after applying directional lighting. As for the 
-        transformations, I used the library provided by the textbook after asking Minghao if I could use their library
-        for matrix operations. I used this library to calculate the transformation matricies for the given transformations,
-        and then in the vertex shader I applied this transformation matrix to each vertex. 
+        This assignment largely involved using the library from the textbook, as well as the provided examples, in order to 
+        render a point light source and smooth shading. To implement the smooth shading algorithms, I used gourand shading, where
+        I calculate the color at each vertex as opposed for each polygon. This resulted in a much smoother gradient
     </p>
     <!-- <h2>Output Image</h2>
     <img src="prog_1_output.png"> -->
     <h2>Program Output</h2>
-    <img src="images/input.png">
-    <img src="images/diffuse_lighting.png">
-    <img src="images/wireframe_rending.png">
+    <img src="prog3Output.png">
     
 
 

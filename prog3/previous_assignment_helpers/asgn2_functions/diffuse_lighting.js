@@ -11,12 +11,22 @@ function diffuseLightingInit(gl, program, triangle_list, boolEndCaps, surfaceCol
     writeToBuffer(gl, program, 'a_normal', normals)
 
     //initialize lighting
-    let gl_light_color = gl.getUniformLocation(program, 'light_color');
+    if(document.getElementById('diffuseLightingBool').checked){
+        let gl_light_color = gl.getUniformLocation(program, 'light_color');
 
-    gl.uniform3f(gl_light_color, 1.0,1.0,1.0);
+        gl.uniform3f(gl_light_color, 1.0,1.0,1.0);
 
-    let gl_light_color_specular = gl.getUniformLocation(program, 'u_Light_Color');
-    gl.uniform3f(gl_light_color_specular, 1.0,1.0,1.0);
+        let gl_light_color_specular = gl.getUniformLocation(program, 'u_Light_Color');
+        gl.uniform3f(gl_light_color_specular, 1.0,1.0,1.0);
+    } else {
+        let gl_light_color = gl.getUniformLocation(program, 'light_color');
+
+        gl.uniform3f(gl_light_color, 0.0,0.0,0.0);
+
+        let gl_light_color_specular = gl.getUniformLocation(program, 'u_Light_Color');
+        gl.uniform3f(gl_light_color_specular, 0.0,0.0,0.0);
+
+    }
 
 
     

@@ -181,3 +181,67 @@ function calculateVertexNormals(triangle_list, normals, boolEndCaps){
     }
     return calculated_vertex_normals
 }
+
+
+function generateSphere(gl, program){
+    var SPHERE_DIV = 13;
+
+    var i, ai, si, ci;
+    var j, aj, sj, cj;
+    var p1, p2;
+  
+    var positions123 = [];
+    var indices123 = [];
+  
+    // Generate coordinates
+    for (j = 0; j <= SPHERE_DIV; j++) {
+      aj = j * Math.PI / SPHERE_DIV;
+      sj = Math.sin(aj);
+      cj = Math.cos(aj);
+      for (i = 0; i <= SPHERE_DIV; i++) {
+        ai = i * 2 * Math.PI / SPHERE_DIV;
+        si = Math.sin(ai);
+        ci = Math.cos(ai);
+  
+        positions123.push((si * sj) );  // X
+        positions123.push((cj) );       // Y
+        positions123.push((ci * sj) );  // Z
+      }
+    }
+  
+    // Generate indices
+    for (j = 0; j < SPHERE_DIV; j++) {
+      for (i = 0; i < SPHERE_DIV; i++) {
+        p1 = j * (SPHERE_DIV+1) + i;
+        p2 = p1 + (SPHERE_DIV+1);
+  
+        indices123.push(p1);
+        indices123.push(p2);
+        indices123.push(p1 + 1);
+  
+        indices123.push(p1 + 1);
+        indices123.push(p2);
+        indices123.push(p2 + 1);
+      }
+    }
+
+    // let new_program = initializeProgram(gl, vertexShader2d, fragmentShader2d)
+    writeToBuffer(gl, program, 'a_position', positions123)
+
+    let transformation_matrix = new Matrix4()
+    transformation_matrix.setScale(0.05, 0.05, 0.05)
+    // .setTranslate(0,document.getElementById('pointLightingTranslationY').value/100,0)
+    transformation_matrix.translate(-10,document.getElementById('pointLightingTranslationY').value/100,10)
+    var positionAttributeLocationConst = gl.getUniformLocation(program, "transformation");
+    gl.uniformMatrix4fv(positionAttributeLocationConst, false, transformation_matrix.elements);
+
+    let colors_buffer123 = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, colors_buffer123);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices123), gl.STATIC_DRAW);
+  
+    gl.drawElements(gl.TRIANGLES, indices123.length, gl.UNSIGNED_SHORT, 0);
+
+    let dropDownMenu= document.getElementById('shadingType')
+    let shadingType = dropDownMenu.options[dropDownMenu.selectedIndex].value
+
+}

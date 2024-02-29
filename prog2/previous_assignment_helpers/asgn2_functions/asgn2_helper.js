@@ -169,6 +169,11 @@ function transformationListenerInit(){
   rangeInput = document.getElementById("renderOption")
   rangeInput.addEventListener('input', ()=>{ 
     SORWrapper()  })
+
+  rangeInput = document.getElementById("pointLightingTranslationY")
+  rangeInput.addEventListener('input', ()=>{ 
+    SORWrapper()  })
+
 }
 
 function SORWrapper(){

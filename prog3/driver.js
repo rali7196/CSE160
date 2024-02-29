@@ -40,7 +40,7 @@ function SORWrapper(){
 
   let program = initializeProgram(gl, vertexShader2d, fragmentShader2d)
 
-  gl.clearColor(0, 0, 0, 1);
+  gl.clearColor(0, 0, 0.0, 1);
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.viewport(0, 0, 500, 500);//500, 500
 
@@ -49,29 +49,47 @@ function SORWrapper(){
 
 
   if(shadingType=='wireframe'){
+
     generateSORNewTransformation(gl, program, false)
     generateSORNewTransformation(gl, program, true)
+  let programSphere = initializeProgram(gl, vertexShader2d, fragmentShader2d)
+
+    // generateSphere(gl, programSphere)
+
   } else if(shadingType=='flatShading'){
+
     let program2 = initializeProgram(gl, vertexShaderAsgn2, fragmentShaderAsgn2);
     gl.enable(gl.DEPTH_TEST);
     gl.enable(gl.CULL_FACE);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 
+
     // gl.clear(gl.DEPTH_BUFFER_BIT);
     
     drawSORWithTriangles(gl, program2, false, [1.0,0.0,0.0], gl.TRIANGLES)
     drawSORWithTriangles(gl, program2, true, [0.0,1.0,0.0], gl.TRIANGLES)
+    let programSphere = initializeProgram(gl, vertexShader2d, fragmentShader2d)
+
+    // generateSphere(gl, programSphere)
+
+
 
   } else if(shadingType=='gourandShading'){
     let program2 = initializeProgram(gl, vertexShaderAsgn2, fragmentShaderAsgn2);
     gl.enable(gl.DEPTH_TEST);
     gl.enable(gl.CULL_FACE);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    
 
     // gl.clear(gl.DEPTH_BUFFER_BIT);
     
     gourandShading(gl, program2, false, [1.0,0.0,0.0], gl.TRIANGLES)
     gourandShading(gl, program2, true, [0.0,1.0,0.0], gl.TRIANGLES)
+    let programSphere = initializeProgram(gl, vertexShader2d, fragmentShader2d)
+
+    // generateSphere(gl, programSphere)
+
+
   }
 }
 

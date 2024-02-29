@@ -15,9 +15,7 @@ function createShader(gl, type, source) {
 function createProgram(gl, vertexShader, fragmentShader) {
   var program = gl.createProgram();
   gl.attachShader(program, vertexShader);
-  console.log('successfully compiled vertex shader')
   gl.attachShader(program, fragmentShader);
-  console.log('successfully compiled fragment shader')
 
 
   gl.linkProgram(program);

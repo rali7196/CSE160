@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <h1>Programming Assignment 2 Demo</h1>
+    <h1>Programming Assignment 3 Demo</h1>
     <h2>Please allow your browser to download multiple files to see .coor and .poly files.
       Also, refresh the page everytime you want to draw a new shape
     </h2>
@@ -21,6 +21,8 @@
     <p></p>
     <!-- <input type="checkbox" id = "drawEndCaps" min = 0 max = 1 value = 1>Check if you want endcaps</input> -->
     <input type="checkbox" id = "downloadFiles" min = 0 max = 1 value = 0>Check if you want to download .coor and .poly</input>
+    <input type="checkbox" id = "diffuseLightingBool" onclick = "SORWrapper()" max = 1 value = 0>Turn on directional lighting</input>
+
 
     <!-- <button onclick="getDrawEndCaps()">Save option to draw end caps(0 for false, 1 for true)</button> -->
     <h3>Shading Type</h3>
@@ -45,6 +47,8 @@
     
     <p>X Translation Slider</p>
     <input type="range" id="translationSliderX" min="-100" max="100">
+    <p>Point Lighting Y Slider</p>
+    <input type="range" id="pointLightingTranslationY" min="-100" max="100">
     <p></p>
 
     

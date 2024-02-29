@@ -16,13 +16,26 @@ function myRotateX(gl, program, second){
   transformation_matrix.rotate(angleZ, 0,0,1)
 
   if(second){
-    transformation_matrix.translate(translationX+0.8,0,0)
+    transformation_matrix.translate(translationX+1.3,0,0)
   } else {
-    transformation_matrix.translate(translationX-0.8,0,0)
+    transformation_matrix.translate(translationX-1.0,0,0)
   }
 
   var positionAttributeLocationConst = gl.getUniformLocation(program, "transformation");
   gl.uniformMatrix4fv(positionAttributeLocationConst, false, transformation_matrix.elements);
+  
+
+  let vp_matrix = new Matrix4()
+
+
+  vp_matrix.setPerspective(30,1,0.1,6)
+  vp_matrix.lookAt(
+    1,1,4,
+    0,0,0,
+    0,0,1)
+  vp_matrix.multiply(transformation_matrix)
+  let mv_matrix_location = gl.getUniformLocation(program, 'MV_matrix')
+  gl.uniformMatrix4fv(mv_matrix_location, false, vp_matrix.elements)
 
   let normal_transformation_matrix = new Matrix4();
   normal_transformation_matrix.setInverseOf(transformation_matrix)
