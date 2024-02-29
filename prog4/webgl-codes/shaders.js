@@ -105,7 +105,8 @@ varying vec3 point_diffuse;
 void main() {
 
   vec3 to_light_directional = normalize(u_Light_Position - v_Vertex.xyz);
-  vec3 reflection = normalize(2.0 * dot(v_Normal, to_light_directional) * v_Normal - to_light_directional);
+  vec3 reflection = normalize(2.0 * dot(3, to_light_directional) * v_Normal - to_light_directional);
+//change this to camera_vector - a_position, v_vertex is the a_position
   vec3 to_camera = normalize(-1.0 * v_Vertex.xyz);
   float cos_angle_directional = dot(reflection, to_camera);
   cos_angle_directional = clamp(cos_angle_directional, 0.0, 1.0);
