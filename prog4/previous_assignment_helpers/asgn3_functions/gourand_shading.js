@@ -4,7 +4,7 @@
 //to have camera rotate around scene, change eye point for lookat
 
 
-function gourandShadingInit(gl, program, triangle_list, boolEndCaps, surfaceColor){
+function gourandShadingInit(gl, program, triangle_list, boolEndCaps, surfaceColor, sphereCenter){
     let normals = calculateNormals(triangle_list, boolEndCaps);
 
     let vertex_normals = calculateVertexNormals(triangle_list, normals, boolEndCaps);
@@ -40,6 +40,10 @@ function gourandShadingInit(gl, program, triangle_list, boolEndCaps, surfaceColo
 
     // }
     // writeToBuffer(gl, program, 'light_direction_point', [-100.0,100.0,100.0])
+
+    let point_direction = gl.getUniformLocation(program, 'light_direction_point')
+    gl.uniform3f(point_direction, sphereCenter[0], sphereCenter[1], sphereCenter[2])
+
     let point_color = gl.getUniformLocation(program, 'light_color_point')
     gl.uniform3f(point_color, 1.0, 0.8, 0.2)
 
@@ -47,8 +51,8 @@ function gourandShadingInit(gl, program, triangle_list, boolEndCaps, surfaceColo
     modelMatrix.setTranslate(0,document.getElementById('pointLightingTranslationY').value/100,0)
     gl.uniformMatrix4fv(gl.getUniformLocation(program, 'model_matrix'), false, modelMatrix.elements)
 
-    let point_loc = gl.getUniformLocation(program, 'light_direction_point')
-    gl.uniform3f(point_loc, -100.0, 100.0, 100.0)
+    // let point_loc = gl.getUniformLocation(program, 'light_direction_point')
+    // gl.uniform3f(point_loc, -100.0, 100.0, 100.0)
     
     let gl_light_direction = gl.getUniformLocation(program, 'light_direction');
     let light_direction = new Vector3([1.0,1.0,1.0])
@@ -67,7 +71,7 @@ function gourandShadingInit(gl, program, triangle_list, boolEndCaps, surfaceColo
 }
 
 
-function gourandShading(gl, program, second, surfaceColor, primitiveType){
+function gourandShading(gl, program, second, surfaceColor, primitiveType, sphereCenter){
 
     let positions_list = getPointsList(true, generateSORPoints());
     let triangle_list = countTriangles(boolEndCaps, generateSORPoints())
@@ -87,7 +91,8 @@ function gourandShading(gl, program, second, surfaceColor, primitiveType){
 
     myRotateX(gl, program, second)
 
-    gourandShadingInit(gl, program, triangle_list, boolEndCaps, surfaceColor)
+    gourandShadingInit(gl, program, triangle_list, boolEndCaps, surfaceColor, sphereCenter)
+
 
     webGLDrawTrianglesFromIndices(gl, positions_list, triangle_list, program, positionAttributeLocation, primitiveType)
 

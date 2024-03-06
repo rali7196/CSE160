@@ -19,7 +19,7 @@ varying vec4 v_color;
 
 
 void main() {
-  gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+  gl_FragColor = vec4(1.0,0.8,0.3,1.0);
   //gl_FragColor = v_color;
 }
 `
@@ -65,9 +65,9 @@ void main() {
   v_Vertex = transformation * a_position;
   vec3 normal = normalize(normal_transformation * a_normal).xyz;
 
-  vec3 light_dir_point = (vec4(-100.0,100.0,100.0,1.0) ).xyz - (transformation * a_position).xyz;
+  vec3 light_dir_point = normalize(light_direction_point - (transformation * a_position).xyz);
   
-  float nDotLPoint = max( dot( normalize(light_dir_point), normal), 0.0 );
+  float nDotLPoint = max( dot(light_dir_point, normal), 0.0 );
 
   point_diffuse = vec3(1.0,0.8,0.2) * a_color.rgb * nDotLPoint;
 
@@ -105,7 +105,7 @@ varying vec3 point_diffuse;
 void main() {
 
   vec3 to_light_directional = normalize(u_Light_Position - v_Vertex.xyz);
-  vec3 reflection = normalize(2.0 * dot(3, to_light_directional) * v_Normal - to_light_directional);
+  vec3 reflection = normalize(2.0 * dot(v_Normal, to_light_directional) * v_Normal - to_light_directional);
 //change this to camera_vector - a_position, v_vertex is the a_position
   vec3 to_camera = normalize(-1.0 * v_Vertex.xyz);
   float cos_angle_directional = dot(reflection, to_camera);
@@ -115,7 +115,7 @@ void main() {
 
 
 
-  gl_FragColor = vec4(diffuse + ambient_light + specular_color_directional, a_color_fragment.a);
+  gl_FragColor = vec4(diffuse + ambient_light + specular_color_directional + point_diffuse, a_color_fragment.a);
   //gl_FragColor = v_Color;
 }
 `

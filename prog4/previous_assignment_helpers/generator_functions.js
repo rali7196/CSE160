@@ -189,40 +189,40 @@ function generateSphere(gl, program){
     var i, ai, si, ci;
     var j, aj, sj, cj;
     var p1, p2;
-  
+
     var positions123 = [];
     var indices123 = [];
-  
+
     // Generate coordinates
     for (j = 0; j <= SPHERE_DIV; j++) {
-      aj = j * Math.PI / SPHERE_DIV;
-      sj = Math.sin(aj);
-      cj = Math.cos(aj);
-      for (i = 0; i <= SPHERE_DIV; i++) {
+    aj = j * Math.PI / SPHERE_DIV;
+    sj = Math.sin(aj);
+    cj = Math.cos(aj);
+    for (i = 0; i <= SPHERE_DIV; i++) {
         ai = i * 2 * Math.PI / SPHERE_DIV;
         si = Math.sin(ai);
         ci = Math.cos(ai);
-  
-        positions123.push((si * sj) );  // X
+
+        positions123.push((si * sj) +5);  // X
         positions123.push((cj) );       // Y
         positions123.push((ci * sj) );  // Z
-      }
     }
-  
+    }
+
     // Generate indices
     for (j = 0; j < SPHERE_DIV; j++) {
-      for (i = 0; i < SPHERE_DIV; i++) {
+    for (i = 0; i < SPHERE_DIV; i++) {
         p1 = j * (SPHERE_DIV+1) + i;
         p2 = p1 + (SPHERE_DIV+1);
-  
+
         indices123.push(p1);
         indices123.push(p2);
         indices123.push(p1 + 1);
-  
+
         indices123.push(p1 + 1);
         indices123.push(p2);
         indices123.push(p2 + 1);
-      }
+    }
     }
 
     // let new_program = initializeProgram(gl, vertexShader2d, fragmentShader2d)
@@ -230,9 +230,7 @@ function generateSphere(gl, program){
 
     let transformation_matrix = new Matrix4()
     transformation_matrix.setScale(0.05, 0.05, 0.05)
-    // .setTranslate(0,document.getElementById('pointLightingTranslationY').value/100,0)
-    transformation_matrix.translate(-10,document.getElementById('pointLightingTranslationY').value/100,10)
-    var positionAttributeLocationConst = gl.getUniformLocation(program, "transformation");
+    var positionAttributeLocationConst = gl.getUniformLocation(program, "MV_matrix");
     gl.uniformMatrix4fv(positionAttributeLocationConst, false, transformation_matrix.elements);
 
     let colors_buffer123 = gl.createBuffer();
@@ -241,7 +239,18 @@ function generateSphere(gl, program){
   
     gl.drawElements(gl.TRIANGLES, indices123.length, gl.UNSIGNED_SHORT, 0);
 
-    let dropDownMenu= document.getElementById('shadingType')
-    let shadingType = dropDownMenu.options[dropDownMenu.selectedIndex].value
+    let averageX = 0;
+    let averageY = 0;
+    let averageZ = 0;
+    for(let i = 0; i < indices123.length; i+=3){
+        averageX += indices123[i]
+        averageY += indices123[i+1]
+        averageZ += indices123[i+2]
+    }
+
+    let centerX = averageX / (indices123.length / 3)
+    let centerY = averageY / (indices123.length / 3)
+    let centerZ = averageZ / (indices123.length / 3)
+    return [indices123[0], indices123[1], indices123[2]]
 
 }

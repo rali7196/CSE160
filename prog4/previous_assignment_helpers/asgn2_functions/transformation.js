@@ -28,7 +28,7 @@ function myRotateX(gl, program, second){
   let vp_matrix = new Matrix4()
 
 
-  vp_matrix.setPerspective(30,1,0.1,6)
+  vp_matrix.setPerspective(30, 1, 0.0001,10)
   vp_matrix.lookAt(
     1,1,4,
     0,0,0,
@@ -45,11 +45,6 @@ function myRotateX(gl, program, second){
   gl.uniformMatrix4fv(glsl_transformation_matrix, false, normal_transformation_matrix.elements);
 
 }
-
-
-
-
-
 
 
 

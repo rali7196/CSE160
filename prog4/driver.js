@@ -52,7 +52,7 @@ function SORWrapper(){
 
     generateSORNewTransformation(gl, program, false)
     generateSORNewTransformation(gl, program, true)
-  let programSphere = initializeProgram(gl, vertexShader2d, fragmentShader2d)
+    // let programSphere = initializeProgram(gl, vertexShader2d, fragmentShader2d)
 
     // generateSphere(gl, programSphere)
 
@@ -70,24 +70,24 @@ function SORWrapper(){
     drawSORWithTriangles(gl, program2, true, [0.0,1.0,0.0], gl.TRIANGLES)
     let programSphere = initializeProgram(gl, vertexShader2d, fragmentShader2d)
 
-    // generateSphere(gl, programSphere)
+    generateSphere(gl, programSphere)
 
 
 
   } else if(shadingType=='gourandShading'){
-    let program2 = initializeProgram(gl, vertexShaderAsgn2, fragmentShaderAsgn2);
     gl.enable(gl.DEPTH_TEST);
     gl.enable(gl.CULL_FACE);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-    
 
-    // gl.clear(gl.DEPTH_BUFFER_BIT);
-    
-    gourandShading(gl, program2, false, [1.0,0.0,0.0], gl.TRIANGLES)
-    gourandShading(gl, program2, true, [0.0,1.0,0.0], gl.TRIANGLES)
     let programSphere = initializeProgram(gl, vertexShader2d, fragmentShader2d)
+    let sphereCenter = generateSphere(gl, programSphere)
 
-    // generateSphere(gl, programSphere)
+
+    let program2 = initializeProgram(gl, vertexShaderAsgn2, fragmentShaderAsgn2);
+      
+    gourandShading(gl, program2, false, [1.0,0.0,0.0], gl.TRIANGLES, sphereCenter)
+    // gourandShading(gl, program2, true, [0.0,1.0,0.0], gl.TRIANGLES, sphereCenter)
+
 
 
   }
